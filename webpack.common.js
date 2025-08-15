@@ -17,6 +17,7 @@ module.exports = {
             template: "./src/template.html",
         }),
         new ESLintPlugin({
+            eslintPath: "eslint/use-at-your-own-risk",
             extensions: ["js"],
             emitWarning: true,
         }),
@@ -26,6 +27,10 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
+            },
+            {
+                test: /\.html$/i,
+                loader: "html-loader",
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,

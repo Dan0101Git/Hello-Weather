@@ -1,4 +1,63 @@
 /* styles.css */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --body-bg: rgb(250, 250, 250);
+    --main-font-family: "Poppins", sans-serif;
+    --heading-font-family: "Raleway", sans-serif;
+    --container-bg: rgba(66, 66, 66, 0.115);
+    --border-radius: 1rem;
+    --base-font-size: clamp(14px, calc(15px + 0.3vw), 5vw);
+}
+html,
+input {
+    font-size: var(--base-font-size);
+    font-family: var(--main-font-family);
+}
 body {
-    background-color: rebeccapurple;
+    height: 100vh;
+    width: 100vw;
+}
+
+input {
+    font-weight: 500;
+}
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5rem;
+    background-color: var(--body-bg);
+}
+.search-location {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+.search-location button {
+    padding: 0.3rem;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    position: absolute;
+    right: 0;
+    background-color: transparent;
+}
+.search-location button:hover {
+    background: var(--container-bg);
+}
+.search-location input {
+    height: 3rem;
+    width: 20rem;
+    padding: 0.7rem;
+    background-color: rgba(29, 29, 29, 0.079);
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
 }
