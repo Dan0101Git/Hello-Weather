@@ -1,7 +1,7 @@
 const apiKey = "21522390f9b0f28b34db2255350fa66a";
 let weatherUrl;
-const mapContainer = document.querySelector("#map");
 let mapTile;
+let currentMarker;
 const helpers = (function helpersModule() {
     function getUrl(location, coord) {
         const coordUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=10&appid=${apiKey}`;
@@ -14,26 +14,38 @@ const helpers = (function helpersModule() {
         const weather = await response.json();
         return weather;
     }
+
     function createMap(coord) {
         const map = L.map("map", {
             center: coord,
-            zoom: 8,
+            zoom: 10,
         });
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution:
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map);
+        L.tileLayer(
+            "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+            {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }
+        ).addTo(map);
+        L.tileLayer(
+            `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`
+        ).addTo(map);
         return map;
     }
     function buildMap(coord, name) {
-        let map;
         if (!mapTile) {
             mapTile = createMap(coord);
             console.log(mapTile);
         } else {
-            mapTile.setView(coord, 8);
-            L.marker(coord).addTo(mapTile).bindPopup(name).openPopup();
+            mapTile.setView(coord, 10);
         }
+        if (currentMarker) {
+            mapTile.removeLayer(currentMarker);
+        }
+        currentMarker = L.marker(coord)
+            .addTo(mapTile)
+            .bindPopup(name)
+            .openPopup();
         console.log(mapTile);
     }
 

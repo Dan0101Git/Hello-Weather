@@ -7,7 +7,7 @@
     padding: 0;
 }
 :root {
-    --body-bg: rgb(250, 250, 250);
+    --body-bg: rgba(1, 1, 1, 0.682);
     --main-font-family: "Poppins", sans-serif;
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.115);
@@ -34,6 +34,9 @@ input {
     justify-content: center;
     padding: 5rem;
     background-color: var(--body-bg);
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
 }
 .search-location {
     display: flex;
@@ -56,12 +59,14 @@ input {
     height: 3rem;
     width: 20rem;
     padding: 0.7rem;
-    background-color: rgba(29, 29, 29, 0.079);
+    background-color: rgb(245, 245, 245);
     outline: none;
     border: none;
     border-radius: 0.5rem;
 }
 #map {
     height: 400px;
-    width: clamp(150px, 40vw, 400px);
+    width: 400px;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 10px 1px rgb(10, 10, 10);
 }
