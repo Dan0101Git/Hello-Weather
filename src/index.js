@@ -1,16 +1,12 @@
 import "./style.css";
 import helpers from "./app/helpers";
+import data from "./app/bundleData";
 
 const searchLocationInput = document.querySelector("#search-input");
 const searchLocationButton = document.querySelector(".search-button");
 
 // const apiKey="21522390f9b0f28b34db2255350fa66a";
 
-async function getData(url) {
-    const response = await fetch(url);
-    const weather = await response.json();
-    return weather;
-}
 async function getWeather() {
     console.log("hey");
     try {
@@ -18,17 +14,23 @@ async function getWeather() {
         if (location) {
             location = location.replace(" ", ",");
             console.log(location);
-            const coordResponse = await getData(
+            const time1 = helpers.getTime();
+            const coordResponse = await helpers.getData(
                 helpers.getUrl(location).coordUrl
             );
+            console.log(helpers.getElapsedTime(time1));
             console.table(coordResponse);
-            const coord = [coordResponse[0].lat, coordResponse[0].lon];
-            console.log(coord);
-            const weather = await getData(
+            console.log(data.bundleCoordData(coordResponse));
+            const coordData = data.bundleCoordData(coordResponse);
+            const coord = [coordData.coordinates[0], coordData.coordinates[1]];
+            helpers.buildMap(coord, coordData.name);
+            const time2 = helpers.getTime();
+            const weather = await helpers.getData(
                 helpers.getUrl(location, coord).weatherUrl
             );
-            console.table(weather);
-        } else {
+            console.log(helpers.getElapsedTime(time1));
+            console.log(weather);
+        } else if (!location) {
             throw new Error("please enter the location");
         }
     } catch (error) {

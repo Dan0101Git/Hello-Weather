@@ -1,6 +1,7 @@
 const apiKey = "21522390f9b0f28b34db2255350fa66a";
 let weatherUrl;
-
+const mapContainer = document.querySelector("#map");
+let mapTile;
 const helpers = (function helpersModule() {
     function getUrl(location, coord) {
         const coordUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=10&appid=${apiKey}`;
@@ -13,6 +14,36 @@ const helpers = (function helpersModule() {
         const weather = await response.json();
         return weather;
     }
-    return { getUrl, getData };
+    function createMap(coord) {
+        const map = L.map("map", {
+            center: coord,
+            zoom: 8,
+        });
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+        return map;
+    }
+    function buildMap(coord, name) {
+        let map;
+        if (!mapTile) {
+            mapTile = createMap(coord);
+            console.log(mapTile);
+        } else {
+            mapTile.setView(coord, 8);
+            L.marker(coord).addTo(mapTile).bindPopup(name).openPopup();
+        }
+        console.log(mapTile);
+    }
+
+    function getElapsedTime(timeStarted) {
+        const currentTime = new Date();
+        return `Elapsed ${currentTime - timeStarted} ms`;
+    }
+    function getTime() {
+        return new Date();
+    }
+    return { getUrl, getData, buildMap, getElapsedTime, getTime };
 })();
 export default helpers;

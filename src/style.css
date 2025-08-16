@@ -61,3 +61,7 @@ input {
     border: none;
     border-radius: 0.5rem;
 }
+#map {
+    height: 400px;
+    width: clamp(150px, 40vw, 400px);
+}
