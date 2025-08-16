@@ -27,6 +27,11 @@ body {
 input {
     font-weight: 500;
 }
+h1,
+h2,
+h3 {
+    color: white;
+}
 .container {
     height: 100%;
     width: 100%;
@@ -68,5 +73,37 @@ input {
     height: 400px;
     width: 400px;
     border-radius: 2rem;
-    box-shadow: 0px 0px 10px 1px rgb(10, 10, 10);
+    box-shadow: 0px 0px 10px 1px #0a0a0a;
+    position: relative;
+}
+.leaflet-popup-content-wrapper {
+    background-color: #2c2c2c9c; /* Dark background */
+    color: #ffffff; /* Light text */
+    border-radius: 50%;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+    width: 5rem;
+    height: 5rem;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--main-font-family);
+    font-size: 1.5rem;
+}
+
+/* Styles the popup's arrow */
+.leaflet-popup-tip {
+    background-color: #2c2c2cf2;
+    border-radius: 0.4rem;
+}
+
+.leaflet-container .leaflet-control-attribution {
+    background-color: rgba(0, 0, 0, 0.261);
+    position: absolute;
+    top: -0.7rem;
+    left: -21rem;
+    font-size: 0.5rem;
+}
+.weather-tile-layer {
+    filter: contrast(1.002) brightness(1.2);
 }

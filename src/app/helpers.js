@@ -1,4 +1,8 @@
+import dataState from "../dataState";
+import render from "../render/render";
+
 const apiKey = "21522390f9b0f28b34db2255350fa66a";
+const mapApiKey = "c3438d2bec484858b1e2ad9c135fd18d";
 let weatherUrl;
 let mapTile;
 let currentMarker;
@@ -15,40 +19,6 @@ const helpers = (function helpersModule() {
         return weather;
     }
 
-    function createMap(coord) {
-        const map = L.map("map", {
-            center: coord,
-            zoom: 10,
-        });
-        L.tileLayer(
-            "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-            {
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }
-        ).addTo(map);
-        L.tileLayer(
-            `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`
-        ).addTo(map);
-        return map;
-    }
-    function buildMap(coord, name) {
-        if (!mapTile) {
-            mapTile = createMap(coord);
-            console.log(mapTile);
-        } else {
-            mapTile.setView(coord, 10);
-        }
-        if (currentMarker) {
-            mapTile.removeLayer(currentMarker);
-        }
-        currentMarker = L.marker(coord)
-            .addTo(mapTile)
-            .bindPopup(name)
-            .openPopup();
-        console.log(mapTile);
-    }
-
     function getElapsedTime(timeStarted) {
         const currentTime = new Date();
         return `Elapsed ${currentTime - timeStarted} ms`;
@@ -56,6 +26,11 @@ const helpers = (function helpersModule() {
     function getTime() {
         return new Date();
     }
-    return { getUrl, getData, buildMap, getElapsedTime, getTime };
+    function updateState(city) {
+        dataState.currentCity = city;
+        dataState.favLocationArr.push(city);
+        render.renderDisplay(dataState);
+    }
+    return { getUrl, getData, getElapsedTime, getTime, updateState };
 })();
 export default helpers;
