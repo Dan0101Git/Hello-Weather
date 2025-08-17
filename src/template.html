@@ -19,13 +19,30 @@
     </head>
     <body>
         <div class="container">
-            <div class="search-location">
-                <input id="search-input" type="text" class="search" />
-                <button class="search-button">
-                    <img src="images/search2.svg" alt="" />
-                </button>
-            </div>
-            <div id="map"></div>
+            <header>
+                <h1>Hello WeAther</h1>
+                <div class="search-location">
+                    <input id="search-input" type="text" class="search" />
+                    <button class="search-button">
+                        <img src="images/search2.svg" alt="" />
+                    </button>
+                </div>
+            </header>
+            <main class="main-section">
+                <div class="sidebar"></div>
+                <div class="city-details">
+                    <div class="temp"></div>
+                    <div class="map-section">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <p>
+                    created by
+                    <a href="https://github.com/Dan0101Git">Danish</a>
+                </p>
+            </footer>
         </div>
         <script
             src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

@@ -1,10 +1,17 @@
 const apiKey = "21522390f9b0f28b34db2255350fa66a";
 const mapApiKey = "c3438d2bec484858b1e2ad9c135fd18d";
+const displayContainer = document.querySelector(".temp");
+
 let mapTile;
 let currentMarker;
+
 const rendHlper = (function renderHelpers() {
     function resetRender(div) {
-        div.remove();
+        const tempChildren = Array.from(div.children);
+
+        tempChildren.forEach((child) => {
+            child.remove();
+        });
     }
 
     function createMap(coord) {
@@ -29,7 +36,7 @@ const rendHlper = (function renderHelpers() {
     function getTempinC(tempinK) {
         return parseInt((tempinK - 273) * 10, 10) / 10;
     }
-    function buildMap(coord, name, tempinK) {
+    function buildMap(coord, tempinK) {
         if (!mapTile) {
             mapTile = createMap(coord);
             console.log(mapTile);
@@ -53,6 +60,38 @@ const rendHlper = (function renderHelpers() {
             .openPopup();
         console.log(mapTile);
     }
-    return { resetRender, createMap };
+    function getUnit() {
+        const currentUnit = "C";
+        return currentUnit;
+    }
+    function displayCurrentWeather(temp, iconUrl) {
+        const currentTempDiv = document.createElement("div");
+        currentTempDiv.innerHTML = `<span id="current-temp">${temp}°${getUnit()}</span><span class="current-icon"><img src=${iconUrl}></span`;
+        return currentTempDiv;
+    }
+    function getIcon(icon) {
+        // const mainWeatherTypes={
+        //   //  Clear,Clouds,Thunderstorm,Drizzle,Rain,Snow,Atmosphere
+        // }
+        console.log(icon);
+        return `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    }
+    function renderLocationAddress(address) {
+        console.log(address.currentData.weather[0].icon);
+        const weatherIcon = address.currentData.weather[0].icon;
+        const weatherIconUrl = getIcon(weatherIcon);
+        const addresssDiv = document.createElement("div");
+        addresssDiv.classList.add("address-div");
+        addresssDiv.innerHTML += `<div><span class="city-name">${address.name}</span></div><div class="address-secondary"><span>${address.state}</span></div>`;
+        displayContainer.appendChild(addresssDiv);
+        displayContainer.appendChild(
+            displayCurrentWeather(
+                getTempinC(address.currentData.temp),
+                weatherIconUrl
+            )
+        );
+    }
+
+    return { resetRender, buildMap, renderLocationAddress };
 })();
 export default rendHlper;

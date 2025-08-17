@@ -7,12 +7,13 @@
     padding: 0;
 }
 :root {
-    --body-bg: rgba(1, 1, 1, 0.682);
+    --body-bg: rgba(0, 0, 0, 0.767);
     --main-font-family: "Poppins", sans-serif;
     --heading-font-family: "Raleway", sans-serif;
-    --container-bg: rgba(66, 66, 66, 0.115);
+    --container-bg: rgba(66, 66, 66, 0.135);
     --border-radius: 1rem;
-    --base-font-size: clamp(14px, calc(15px + 0.3vw), 5vw);
+    --base-font-size: clamp(14px, calc(6px + 0.8vw), 5vw);
+    --text-color: #ffffff;
 }
 html,
 input {
@@ -30,23 +31,84 @@ input {
 h1,
 h2,
 h3 {
-    color: white;
+    color: var(--body-bg);
 }
 .container {
     height: 100%;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 5rem;
+    display: grid;
+    grid-template-areas: header main footer;
+    grid-template-rows: 1.5fr 20fr 1fr;
     background-color: var(--body-bg);
-    flex-direction: column;
     gap: 2rem;
+}
+.container > * {
+    display: flex;
+}
+
+header {
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+footer {
+    justify-content: center;
     align-items: center;
+}
+main.main-section {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 4rem;
+    padding: 1.5rem clamp(50px, calc(1rem + 3vw), 150px);
+}
+.main-section > * {
+    height: 100%;
+}
+
+.city-details {
+    display: flex;
+    gap: 2rem;
+}
+.city-details .temp {
+    flex: 5;
+}
+.map-section {
+    flex: 2;
+}
+.map-section,
+.temp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1rem;
+}
+
+.sidebar,
+.city-details > * {
+    box-shadow: 0px 0px 10px 1px #e4e4e42f;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.058);
+    min-width: 200px;
+}
+footer > p {
+    letter-spacing: 0.4rem;
+    font-size: 0.85rem;
+}
+footer a {
+    color: rgba(138, 245, 138, 0.54);
+    text-decoration: none;
+    letter-spacing: 0.5rem;
+}
+header h1 {
+    color: var(--text-color);
+    letter-spacing: 0.3rem;
 }
 .search-location {
     display: flex;
     position: relative;
     overflow: hidden;
+}
+div {
+    color: var(--text-color);
 }
 .search-location button {
     padding: 0.3rem;
@@ -64,17 +126,37 @@ h3 {
     height: 3rem;
     width: 20rem;
     padding: 0.7rem;
-    background-color: rgb(245, 245, 245);
+    background-color: rgba(224, 224, 224, 0.144);
     outline: none;
     border: none;
     border-radius: 0.5rem;
 }
+.address-div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+}
+.address-div .city-name {
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+}
+.address-div span {
+    letter-spacing: 0.2rem;
+}
+.address-secondary {
+    font-weight: 200;
+    font-size: 0.9rem;
+}
+#current-temp {
+    font-size: 5rem;
+}
 #map {
-    height: 400px;
-    width: 400px;
+    width: min(95%, 400px);
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 1px #0a0a0a;
     position: relative;
+    height: 70%;
 }
 .leaflet-popup-content-wrapper {
     background-color: #2c2c2c9c; /* Dark background */

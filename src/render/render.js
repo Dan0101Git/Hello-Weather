@@ -1,26 +1,25 @@
 import rendHlper from "./renderHelpers";
 
-const displayContainer = document.querySelector(".container");
 const render = (function renderWeather() {
-    let address;
-    function renderLocationAddress(coordData) {
-        const addresssDiv = document.createElement("div");
-        addresssDiv.classList.add("address-div");
-        addresssDiv.innerHTML += `<h1>${address.name}</h1><h2>${address.state}</h2><h3>${address.country}</h3>`;
-        displayContainer.appendChild(addresssDiv);
-    }
+    let addressName;
+
     function renderDisplay(dataState) {
         let addresssDiv;
         const city = dataState.currentCity;
         const citiesArr = dataState.favLocationArr;
         console.log(dataState);
-        address = city;
+        addressName = city;
         // console.log(address);
         if (document.querySelector(".address-div")) {
-            addresssDiv = document.querySelector(".address-div");
+            addresssDiv = document.querySelector(".temp");
             rendHlper.resetRender(addresssDiv);
         }
-        renderLocationAddress();
+
+        rendHlper.renderLocationAddress(addressName);
+        rendHlper.buildMap(
+            addressName.coordinates,
+            addressName.currentData.temp
+        );
     }
 
     return { renderDisplay };
