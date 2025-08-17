@@ -149,7 +149,10 @@ div {
     font-size: 0.9rem;
 }
 #current-temp {
-    font-size: 5rem;
+    font-size: 6rem;
+}
+.current-icon img {
+    width: 5rem;
 }
 #map {
     width: min(95%, 400px);

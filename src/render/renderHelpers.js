@@ -74,7 +74,7 @@ const rendHlper = (function renderHelpers() {
         //   //  Clear,Clouds,Thunderstorm,Drizzle,Rain,Snow,Atmosphere
         // }
         console.log(icon);
-        return `https://openweathermap.org/img/wn/${icon}@2x.png`;
+        return `https://raw.githubusercontent.com/Dan0101Git/Hello-Weather/refs/heads/main/src/images/icons/${icon}.svg`;
     }
     function renderLocationAddress(address) {
         console.log(address.currentData.weather[0].icon);
