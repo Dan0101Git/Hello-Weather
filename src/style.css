@@ -41,7 +41,7 @@ h3 {
     grid-template-areas: header main footer;
     grid-template-rows: 1.5fr 20fr 1fr;
     background-color: var(--body-bg);
-    gap: 2rem;
+    gap: 1rem;
 }
 .container > * {
     display: flex;
@@ -200,6 +200,12 @@ div {
 .weather-minmax span {
     font-size: 1rem;
 }
+.chart-descrip {
+    font-size: 0.6rem;
+    font-weight: 200;
+    letter-spacing: 0.18rem;
+}
+
 #map {
     width: min(100%, 400px);
     border-radius: 2rem;

@@ -20,7 +20,7 @@ const render = (function renderWeather() {
             addressName.coordinates,
             addressName.currentData.temp
         );
-        rendHlper.createChart();
+        rendHlper.createChart(addressName);
     }
 
     return { renderDisplay };

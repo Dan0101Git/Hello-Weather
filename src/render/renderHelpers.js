@@ -13,6 +13,7 @@ const rendHlper = (function renderHelpers() {
         tempChildren.forEach((child) => {
             const grandChildDiv = Array.from(child.children);
             grandChildDiv.forEach((grandChild) => {
+                if (grandChild.matches(".hourly-chart")) return;
                 grandChild.remove();
             });
         });
@@ -42,22 +43,46 @@ const rendHlper = (function renderHelpers() {
     function getTempinC(tempinK) {
         return parseInt(tempinK - 273, 10);
     }
-    function getHourlyData() {}
-    function createChart() {
+    function getDate(numberDate, offset) {
+        const date = new Date((numberDate + offset - 19800) * 1000);
+        console.log(date);
+        const options1 = { day: "2-digit", month: "short", year: "numeric" };
+        const currentDate = date.toLocaleDateString("en-GB", options1);
+        const options2 = { hour: "2-digit", minute: "2-digit", hour12: true };
+        const options3 = { hour: "2-digit", minute: "2-digit", hour12: false };
+        console.log(date.toLocaleTimeString());
+        const currentTime = date.toLocaleTimeString("en-GB", options2);
+        const graphTime = date.toLocaleTimeString("en-GB", options3);
+        return { currentDate, currentTime, graphTime };
+    }
+    function getHourlyData(data) {
+        const hourlyDataArr = data.hourlyData;
+        const tempArr = [];
+        const timeArr = [];
+        for (let i = 0; i <= hourlyDataArr.length / 2; i += 4) {
+            const time = getDate(hourlyDataArr[i].dt, data.offset).graphTime;
+            const temp = getTempinC(hourlyDataArr[i].temp);
+            tempArr.push(temp);
+            timeArr.push(time);
+        }
+        return { tempArr, timeArr };
+    }
+    function createChart(cityData) {
         const ctx = document
             .getElementById("hourlyForecastChart")
             .getContext("2d");
+        const hourlyDataObj = getHourlyData(cityData);
         const gradient = ctx.createLinearGradient(0, 0, 0, 150);
         gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
         gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
         const hourlyChart = new Chart(ctx, {
             type: "line", // The type of chart
             data: {
-                labels: [1, 2, 3, 4], // Your time labels
+                labels: hourlyDataObj.timeArr, // Your time labels
                 datasets: [
                     {
                         label: "Temperature", // This is hidden but good for context
-                        data: [20, 25, 22, 23], // Your temperature data
+                        data: hourlyDataObj.tempArr, // Your temperature data
                         borderColor: "rgba(255, 255, 255, 0.8)", // Line color
                         borderWidth: 2,
                         pointBackgroundColor: "#FFFFFF", // Point color
@@ -87,7 +112,7 @@ const rendHlper = (function renderHelpers() {
                             display: false, // Hide the X-axis grid lines
                         },
                         ticks: {
-                            color: "rgba(255, 255, 255, 0.7)", // Color of the time labels
+                            color: "rgba(255, 255, 255, 0.72)", // Color of the time labels
                         },
                     },
                 },
@@ -122,16 +147,7 @@ const rendHlper = (function renderHelpers() {
         const currentUnit = "C";
         return currentUnit;
     }
-    function getDate(numberDate, offset) {
-        const date = new Date((numberDate + offset - 19800) * 1000);
-        console.log(date);
-        const options1 = { day: "2-digit", month: "short", year: "numeric" };
-        const currentDate = date.toLocaleDateString("en-GB", options1);
-        const options2 = { hour: "2-digit", minute: "2-digit", hour12: true };
-        console.log(date.toLocaleTimeString());
-        const currentTime = date.toLocaleTimeString("en-GB", options2);
-        return { currentDate, currentTime };
-    }
+
     function displayCurrentWeather(iconUrl, temp, unit, city) {
         const todayWeatherArray = city.dailyData[0];
         console.log(city.currentData);
