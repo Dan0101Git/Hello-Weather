@@ -11,12 +11,18 @@ const data = (function getData() {
         };
         return coordData;
     }
-    function bundleWeatherData({ current, hourly, daily }) {
+    function bundleWeatherData({
+        current,
+        hourly,
+        daily,
+        timezone_offset: timezoneOffset,
+    }) {
         console.log();
         weatherData = {
             current,
             hourly,
             daily,
+            timezoneOffset,
         };
         return weatherData;
     }

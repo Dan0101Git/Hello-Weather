@@ -1,32 +1,31 @@
-// eslint.config.js
-import js from "@eslint/js";
-import globals from "globals";
-import { FlatCompat } from "@eslint/eslintrc";
-import path from "path";
-import { fileURLToPath } from "url";
+// eslint.config.js (The final CommonJS version)
 
-// This part is needed to make the old Airbnb config work
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const js = require("@eslint/js");
+const globals = require("globals");
+const { FlatCompat } = require("@eslint/eslintrc");
+const path = require("path");
+
 const compat = new FlatCompat({
     baseDirectory: __dirname,
 });
 
-// The main configuration
-export default [
-    // Use the recommended default rules from ESLint
+module.exports = [
+    // THIS IS THE MOST IMPORTANT PART.
+    // IT STOPS ESLINT FROM LOOKING IN THE 'dist' FOLDER.
+    {
+        ignores: ["dist/"],
+    },
+
+    // All your other configurations and rules go below.
     js.configs.recommended,
-
-    // Load your old "extends" using the compatibility tool
     ...compat.extends("airbnb-base", "prettier"),
-
-    // Apply your custom settings
     {
         languageOptions: {
             globals: {
                 ...globals.browser,
                 ...globals.node,
                 L: "readonly",
+                Chart: "readonly",
             },
         },
         rules: {

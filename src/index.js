@@ -30,6 +30,7 @@ async function getWeather() {
             const weather = await helpers.getData(
                 helpers.getUrl(location, coord).weatherUrl
             );
+            console.log(weather);
             //     helpers.buildMap(coord, coordData.name,weather.current.temp);
             data.bundleData(coordResponse, weather);
             const cityInstance = new City(data.getWeatherData());

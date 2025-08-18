@@ -9,6 +9,7 @@ class City {
         this.currentData = weatherData.current;
         this.hourlyData = weatherData.hourly;
         this.dailyData = weatherData.daily;
+        this.offset = weatherData.timezoneOffset;
     }
 
     getCityData() {

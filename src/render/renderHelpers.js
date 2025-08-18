@@ -1,6 +1,7 @@
 const apiKey = "21522390f9b0f28b34db2255350fa66a";
 const mapApiKey = "c3438d2bec484858b1e2ad9c135fd18d";
-const displayContainer = document.querySelector(".temp");
+const displayContainer = document.querySelector(".temp .current-weather");
+const iconContainer = document.querySelector(".temp .hourly-daily");
 
 let mapTile;
 let currentMarker;
@@ -10,7 +11,10 @@ const rendHlper = (function renderHelpers() {
         const tempChildren = Array.from(div.children);
 
         tempChildren.forEach((child) => {
-            child.remove();
+            const grandChildDiv = Array.from(child.children);
+            grandChildDiv.forEach((grandChild) => {
+                grandChild.remove();
+            });
         });
     }
 
@@ -19,12 +23,14 @@ const rendHlper = (function renderHelpers() {
             center: coord,
             zoom: 7,
         });
+        const personalapi = "309145bb-921b-4717-90f0-28436fdc48b9";
         L.tileLayer(
             // "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-            `https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=${mapApiKey}`,
+            `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
             {
                 attribution:
                     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                apiKey: personalapi,
             }
         ).addTo(map);
         L.tileLayer(
@@ -34,7 +40,59 @@ const rendHlper = (function renderHelpers() {
         return map;
     }
     function getTempinC(tempinK) {
-        return parseInt((tempinK - 273) * 10, 10) / 10;
+        return parseInt(tempinK - 273, 10);
+    }
+    function getHourlyData() {}
+    function createChart() {
+        const ctx = document
+            .getElementById("hourlyForecastChart")
+            .getContext("2d");
+        const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+        gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+        const hourlyChart = new Chart(ctx, {
+            type: "line", // The type of chart
+            data: {
+                labels: [1, 2, 3, 4], // Your time labels
+                datasets: [
+                    {
+                        label: "Temperature", // This is hidden but good for context
+                        data: [20, 25, 22, 23], // Your temperature data
+                        borderColor: "rgba(255, 255, 255, 0.8)", // Line color
+                        borderWidth: 2,
+                        pointBackgroundColor: "#FFFFFF", // Point color
+                        fill: true, // Fill the area under the line
+                        backgroundColor: gradient, // Use the gradient for the fill
+                        tension: 0.4, // Makes the line smooth and curved
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false, // Hide the legend box
+                    },
+                },
+                scales: {
+                    y: {
+                        // Y-axis (temperature)
+                        display: false, // Hide the Y-axis labels and grid
+                        beginAtZero: false,
+                    },
+                    x: {
+                        // X-axis (time)
+                        grid: {
+                            display: false, // Hide the X-axis grid lines
+                        },
+                        ticks: {
+                            color: "rgba(255, 255, 255, 0.7)", // Color of the time labels
+                        },
+                    },
+                },
+            },
+        });
     }
     function buildMap(coord, tempinK) {
         if (!mapTile) {
@@ -64,9 +122,25 @@ const rendHlper = (function renderHelpers() {
         const currentUnit = "C";
         return currentUnit;
     }
-    function displayCurrentWeather(temp, iconUrl) {
+    function getDate(numberDate, offset) {
+        const date = new Date((numberDate + offset - 19800) * 1000);
+        console.log(date);
+        const options1 = { day: "2-digit", month: "short", year: "numeric" };
+        const currentDate = date.toLocaleDateString("en-GB", options1);
+        const options2 = { hour: "2-digit", minute: "2-digit", hour12: true };
+        console.log(date.toLocaleTimeString());
+        const currentTime = date.toLocaleTimeString("en-GB", options2);
+        return { currentDate, currentTime };
+    }
+    function displayCurrentWeather(iconUrl, temp, unit, city) {
+        const todayWeatherArray = city.dailyData[0];
+        console.log(city.currentData);
         const currentTempDiv = document.createElement("div");
-        currentTempDiv.innerHTML = `<span id="current-temp">${temp}°${getUnit()}</span><span class="current-icon"><img src=${iconUrl}></span`;
+        currentTempDiv.classList.add("temp-icon");
+        const weatherDescriptHtml = `<div class="weather-descrip"><span>${city.currentData.weather[0].description}</span></div>`;
+        const minMaxHtml = `<div class="weather-minmax"><span>H:${getTempinC(todayWeatherArray.temp.max)}° L:${getTempinC(todayWeatherArray.temp.min)}°</span></div>`;
+        currentTempDiv.innerHTML = `<div><span id="current-temp">${temp}°${unit}</span>${weatherDescriptHtml}${minMaxHtml}</div><div class="icon"><span class="current-icon"><img src=${iconUrl}></span></div>`;
+
         return currentTempDiv;
     }
     function getIcon(icon) {
@@ -80,18 +154,28 @@ const rendHlper = (function renderHelpers() {
         console.log(address.currentData.weather[0].icon);
         const weatherIcon = address.currentData.weather[0].icon;
         const weatherIconUrl = getIcon(weatherIcon);
+        console.log(address.currentData.dt);
+        const currentDatenTime = getDate(
+            address.currentData.dt,
+            address.offset
+        );
+        const dateNTimeHtml = `<div class="date-time"><span>${currentDatenTime.currentDate}</span><span>${currentDatenTime.currentTime}</span></div>`;
         const addresssDiv = document.createElement("div");
         addresssDiv.classList.add("address-div");
-        addresssDiv.innerHTML += `<div><span class="city-name">${address.name}</span></div><div class="address-secondary"><span>${address.state}</span></div>`;
+        const cityState = address.state ? address.state : "";
+
+        addresssDiv.innerHTML += `<div>${dateNTimeHtml}<span class="city-name">${address.name}</span></div><div class="address-secondary"><span>${cityState}</span></div>`;
         displayContainer.appendChild(addresssDiv);
         displayContainer.appendChild(
             displayCurrentWeather(
+                weatherIconUrl,
                 getTempinC(address.currentData.temp),
-                weatherIconUrl
+                getUnit(),
+                address
             )
         );
     }
 
-    return { resetRender, buildMap, renderLocationAddress };
+    return { resetRender, buildMap, renderLocationAddress, createChart };
 })();
 export default rendHlper;

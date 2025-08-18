@@ -16,6 +16,12 @@
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
             crossorigin=""
         />
+        <script src="https://cdn.maptiler.com/maptiler-sdk-js/v3.6.1/maptiler-sdk.umd.min.js"></script>
+        <link
+            href="https://cdn.maptiler.com/maptiler-sdk-js/v3.6.1/maptiler-sdk.css"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.maptiler.com/maptiler-weather/v3.1.1/maptiler-weather.umd.min.js"></script>
     </head>
     <body>
         <div class="container">
@@ -31,7 +37,14 @@
             <main class="main-section">
                 <div class="sidebar"></div>
                 <div class="city-details">
-                    <div class="temp"></div>
+                    <div class="temp">
+                        <div class="current-weather"></div>
+                        <div class="hourly-daily">
+                            <div class="chart-container">
+                                <canvas id="hourlyForecastChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                     <div class="map-section">
                         <div id="map"></div>
                     </div>
@@ -44,6 +57,9 @@
                 </p>
             </footer>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <script
             src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="

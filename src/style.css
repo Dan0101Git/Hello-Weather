@@ -27,6 +27,7 @@ body {
 
 input {
     font-weight: 500;
+    color: white;
 }
 h1,
 h2,
@@ -70,6 +71,7 @@ main.main-section {
 }
 .city-details .temp {
     flex: 5;
+    background-color: rgba(12, 12, 24, 0.669);
 }
 .map-section {
     flex: 2;
@@ -78,8 +80,11 @@ main.main-section {
 .temp {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 1rem 1rem;
+    padding: 1.5rem 1rem;
+}
+.temp {
+    padding: 1.5rem 2rem;
+    gap: 2rem;
 }
 
 .sidebar,
@@ -131,11 +136,16 @@ div {
     border: none;
     border-radius: 0.5rem;
 }
+.date-time {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.6rem;
+}
 .address-div {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-    align-items: center;
+    align-items: flex-start;
 }
 .address-div .city-name {
     font-size: 2rem;
@@ -149,13 +159,49 @@ div {
     font-size: 0.9rem;
 }
 #current-temp {
-    font-size: 6rem;
+    font-size: min(calc(50px + 5vw), 7rem);
+}
+.current-icon {
+    display: inline-block;
+    border: 2px solid rgba(255, 255, 255, 0.137);
+    border-top: 6px solid rgb(255, 255, 210);
+    border-bottom: none;
+    border-radius: 50%;
+
+    padding: 2rem;
 }
 .current-icon img {
-    width: 5rem;
+    min-width: 6rem;
+}
+.current-weather {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-direction: column;
+}
+.temp-icon {
+    display: flex;
+    gap: min(2rem, calc(2vw));
+    flex-wrap: wrap;
+}
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+.weather-descrip span,
+.weather-minmax span {
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+}
+.weather-minmax span {
+    font-size: 1rem;
 }
 #map {
-    width: min(95%, 400px);
+    width: min(100%, 400px);
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 1px #0a0a0a;
     position: relative;
@@ -175,7 +221,11 @@ div {
     font-family: var(--main-font-family);
     font-size: 1.5rem;
 }
-
+.leaflet-popup-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /* Styles the popup's arrow */
 .leaflet-popup-tip {
     background-color: #2c2c2cf2;
@@ -190,5 +240,9 @@ div {
     font-size: 0.5rem;
 }
 .weather-tile-layer {
-    filter: contrast(1.002) brightness(1.2);
+    filter: contrast(1.2) brightness(1) opacity(0.7) saturate(8.1);
+}
+.leaflet-bar a {
+    background-color: rgba(0, 0, 0, 0.413);
+    color: white;
 }
