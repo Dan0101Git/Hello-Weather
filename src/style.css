@@ -71,7 +71,7 @@ main.main-section {
 }
 .city-details .temp {
     flex: 5;
-    background-color: rgba(12, 12, 24, 0.669);
+    background-color: rgba(12, 12, 24, 0.099);
 }
 .map-section {
     flex: 2;
@@ -200,12 +200,20 @@ div {
 .weather-minmax span {
     font-size: 1rem;
 }
+.hourly-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 .chart-descrip {
     font-size: 0.6rem;
     font-weight: 200;
     letter-spacing: 0.18rem;
 }
 
+.chart-container {
+    height: 170px;
+}
 #map {
     width: min(100%, 400px);
     border-radius: 2rem;

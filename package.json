@@ -46,6 +46,7 @@
         "webpack-dev-server": "^5.2.2"
     },
     "dependencies": {
+        "chartjs-plugin-datalabels": "^2.2.0",
         "webpack-merge": "6.0.1"
     },
     "lint-staged": {

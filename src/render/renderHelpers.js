@@ -2,6 +2,7 @@ const apiKey = "21522390f9b0f28b34db2255350fa66a";
 const mapApiKey = "c3438d2bec484858b1e2ad9c135fd18d";
 const displayContainer = document.querySelector(".temp .current-weather");
 const iconContainer = document.querySelector(".temp .hourly-daily");
+let hourlyChart;
 
 let mapTile;
 let currentMarker;
@@ -67,15 +68,13 @@ const rendHlper = (function renderHelpers() {
         }
         return { tempArr, timeArr };
     }
-    function createChart(cityData) {
-        const ctx = document
-            .getElementById("hourlyForecastChart")
-            .getContext("2d");
+    function getChartObject(cityData, gradientData) {
         const hourlyDataObj = getHourlyData(cityData);
-        const gradient = ctx.createLinearGradient(0, 0, 0, 150);
-        gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
-        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-        const hourlyChart = new Chart(ctx, {
+        const maxValue = Math.max(...hourlyDataObj.tempArr);
+        const buffer = maxValue * 0.1;
+        console.log(maxValue);
+
+        return {
             type: "line", // The type of chart
             data: {
                 labels: hourlyDataObj.timeArr, // Your time labels
@@ -87,7 +86,7 @@ const rendHlper = (function renderHelpers() {
                         borderWidth: 2,
                         pointBackgroundColor: "#FFFFFF", // Point color
                         fill: true, // Fill the area under the line
-                        backgroundColor: gradient, // Use the gradient for the fill
+                        backgroundColor: gradientData, // Use the gradient for the fill
                         tension: 0.4, // Makes the line smooth and curved
                     },
                 ],
@@ -99,12 +98,40 @@ const rendHlper = (function renderHelpers() {
                     legend: {
                         display: false, // Hide the legend box
                     },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.parsed.y}°`,
+                        },
+                    },
+                    datalabels: {
+                        display: true,
+
+                        offset: 3, // Pixels of space above the dot
+                        font: {
+                            size: 11,
+                            weight: "bold",
+                        },
+
+                        anchor: "end",
+                        align: "end",
+                        clip: false,
+                        clamp: false,
+                        labels: {
+                            value: {
+                                color: "white",
+                            },
+                        },
+                        // This function formats the text of the label
+                        formatter: (value, context) => `${value}°`,
+                    },
                 },
+
                 scales: {
                     y: {
                         // Y-axis (temperature)
                         display: false, // Hide the Y-axis labels and grid
                         beginAtZero: false,
+                        suggestedMax: maxValue + buffer,
                     },
                     x: {
                         // X-axis (time)
@@ -117,7 +144,21 @@ const rendHlper = (function renderHelpers() {
                     },
                 },
             },
-        });
+        };
+    }
+    function createChart(cityData) {
+        const ctx = document
+            .getElementById("hourlyForecastChart")
+            .getContext("2d");
+        const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+        const hourlyDataObj = getHourlyData(cityData);
+
+        gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+        if (hourlyChart) hourlyChart.destroy();
+        Chart.register(ChartDataLabels);
+        hourlyChart = new Chart(ctx, getChartObject(cityData, gradient));
+        console.log(hourlyChart);
     }
     function buildMap(coord, tempinK) {
         if (!mapTile) {

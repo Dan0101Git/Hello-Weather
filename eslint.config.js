@@ -26,6 +26,7 @@ module.exports = [
                 ...globals.node,
                 L: "readonly",
                 Chart: "readonly",
+                ChartDataLabels: "readonly",
             },
         },
         rules: {
