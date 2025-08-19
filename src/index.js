@@ -6,6 +6,7 @@ import City from "./app/city";
 
 const searchLocationInput = document.querySelector("#search-input");
 const searchLocationButton = document.querySelector(".search-button");
+const addFavLocationButton = document.querySelector(".add-fav button");
 
 // const apiKey="21522390f9b0f28b34db2255350fa66a";
 
@@ -22,7 +23,6 @@ async function getWeather() {
             );
             console.log(helpers.getElapsedTime(time1));
             console.table(coordResponse);
-            // console.log(data.bundleCoordData(coordResponse));
             const coordData = data.bundleCoordData(coordResponse);
             const coord = [coordData.coordinates[0], coordData.coordinates[1]];
 
@@ -31,7 +31,6 @@ async function getWeather() {
                 helpers.getUrl(location, coord).weatherUrl
             );
             console.log(weather);
-            //     helpers.buildMap(coord, coordData.name,weather.current.temp);
             data.bundleData(coordResponse, weather);
             const cityInstance = new City(data.getWeatherData());
             console.log(cityInstance.getCityData());
@@ -44,5 +43,5 @@ async function getWeather() {
         console.log(error);
     }
 }
-
+addFavLocationButton.addEventListener("click", helpers.updateFavCollection);
 searchLocationButton.addEventListener("click", getWeather);

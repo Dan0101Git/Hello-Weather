@@ -73,6 +73,9 @@ const rendHlper = (function renderHelpers() {
         const maxValue = Math.max(...hourlyDataObj.tempArr);
         const buffer = maxValue * 0.1;
         console.log(maxValue);
+        const minValue = Math.min(...hourlyDataObj.tempArr);
+        const minBuffer = minValue * 0.1;
+        console.log(maxValue, minValue);
 
         return {
             type: "line", // The type of chart
@@ -82,7 +85,7 @@ const rendHlper = (function renderHelpers() {
                     {
                         label: "Temperature", // This is hidden but good for context
                         data: hourlyDataObj.tempArr, // Your temperature data
-                        borderColor: "rgba(255, 255, 255, 0.8)", // Line color
+                        borderColor: "rgba(210, 193, 111, 0.8)", // Line color
                         borderWidth: 2,
                         pointBackgroundColor: "#FFFFFF", // Point color
                         fill: true, // Fill the area under the line
@@ -132,6 +135,7 @@ const rendHlper = (function renderHelpers() {
                         display: false, // Hide the Y-axis labels and grid
                         beginAtZero: false,
                         suggestedMax: maxValue + buffer,
+                        suggestedMin: minValue - minBuffer,
                     },
                     x: {
                         // X-axis (time)
@@ -153,7 +157,7 @@ const rendHlper = (function renderHelpers() {
         const gradient = ctx.createLinearGradient(0, 0, 0, 150);
         const hourlyDataObj = getHourlyData(cityData);
 
-        gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
+        gradient.addColorStop(0, "rgba(248, 241, 167, 0.82)");
         gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
         if (hourlyChart) hourlyChart.destroy();
         Chart.register(ChartDataLabels);

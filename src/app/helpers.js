@@ -26,11 +26,46 @@ const helpers = (function helpersModule() {
     function getTime() {
         return new Date();
     }
+    function searchCoordinates(favArray, cityQuery) {
+        let flag = 1;
+        favArray.forEach((city) => {
+            if (
+                city.coordinates[0] === cityQuery.coordinates[0] &&
+                city.coordinates[1] === cityQuery.coordinates[1]
+            ) {
+                flag = 0;
+            }
+        });
+        if (flag === 0) return true;
+        return false;
+    }
     function updateState(city) {
         dataState.currentCity = city;
-        dataState.favLocationArr.push(city);
         render.renderDisplay(dataState);
     }
-    return { getUrl, getData, getElapsedTime, getTime, updateState };
+    function updateFavCollection() {
+        try {
+            if (dataState.currentCity) {
+                const cityObj = dataState.currentCity;
+                if (!searchCoordinates(dataState.favLocationArr, cityObj))
+                    dataState.favLocationArr.push(cityObj);
+                else throw new Error("dupilcate city already exists");
+            } else {
+                throw new Error("please enter a city");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+        console.log(dataState.currentCity, dataState.favLocationArr);
+    }
+    return {
+        getUrl,
+        getData,
+        getElapsedTime,
+        getTime,
+        updateState,
+        updateFavCollection,
+    };
 })();
 export default helpers;

@@ -12,7 +12,7 @@
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.135);
     --border-radius: 1rem;
-    --base-font-size: clamp(14px, calc(6px + 0.8vw), 5vw);
+    --base-font-size: clamp(12px, calc(6px + 0.6vw), 5vw);
     --text-color: #ffffff;
 }
 html,
@@ -71,7 +71,7 @@ main.main-section {
 }
 .city-details .temp {
     flex: 5;
-    background-color: rgba(12, 12, 24, 0.099);
+    background-color: rgba(0, 0, 24, 0.812);
 }
 .map-section {
     flex: 2;
@@ -81,6 +81,7 @@ main.main-section {
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem;
+    justify-content: space-between;
 }
 .temp {
     padding: 1.5rem 2rem;
@@ -91,8 +92,11 @@ main.main-section {
 .city-details > * {
     box-shadow: 0px 0px 10px 1px #e4e4e42f;
     border-radius: 1rem;
-    background-color: rgba(255, 255, 255, 0.058);
     min-width: 200px;
+}
+.sidebar {
+    background-color: rgba(255, 255, 255, 0.058);
+    background-color: rgba(0, 0, 24, 0.812);
 }
 footer > p {
     letter-spacing: 0.4rem;
@@ -111,6 +115,7 @@ header h1 {
     display: flex;
     position: relative;
     overflow: hidden;
+    gap: 0.5rem;
 }
 div {
     color: var(--text-color);
@@ -120,9 +125,33 @@ div {
     width: 3rem;
     height: 3rem;
     border: none;
-    position: absolute;
     right: 0;
     background-color: transparent;
+    color: white;
+}
+.search-location .add-fav button {
+    display: flex;
+    width: 6rem;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.272);
+    border-radius: 2rem;
+}
+.add-fav button span {
+    background-color: rgba(255, 255, 255, 0.083);
+    border-radius: 50%;
+    padding: 0.2rem;
+    width: 24px;
+    aspect-ratio: 1;
+    display: flex;
+    height: 24px;
+}
+.search-location button.search-button {
+    position: absolute;
+    right: 0;
 }
 .search-location button:hover {
     background: var(--container-bg);
@@ -212,14 +241,14 @@ div {
 }
 
 .chart-container {
-    height: 170px;
+    height: 200px;
 }
 #map {
     width: min(100%, 400px);
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 1px #0a0a0a;
     position: relative;
-    height: 70%;
+    height: 90%;
 }
 .leaflet-popup-content-wrapper {
     background-color: #2c2c2c9c; /* Dark background */
