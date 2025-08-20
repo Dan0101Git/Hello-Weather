@@ -58,13 +58,28 @@ footer {
 .sidebar #fav-city {
     display: flex;
     flex-direction: column;
+    padding: 0.5rem;
 }
 #fav-city .city-list-item {
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: 0.1rem;
+    padding: 0.8rem;
+    padding-bottom: 0;
+    border-radius: 0.5rem;
+}
+#fav-city .city-list-item + .city-list-item {
+    padding: 0 0.8rem;
+}
+.city-list-item:hover {
+    background-color: rgba(128, 128, 128, 0.343);
+    cursor: pointer;
+    transform: translate(0, 0) scale(1.009);
+    transition: all 0.3s ease-in-out;
+}
+.city-list-item:hover hr {
+    visibility: hidden;
 }
 .city-list-item .uppersec,
 .city-list-item .lower-sec > div {
@@ -85,8 +100,13 @@ footer {
     font-size: 2.5rem;
 }
 .city-list-item .lower-sec {
-    font-size: 0.85rem;
+    font-size: 0.55rem;
     letter-spacing: 0.06rem;
+}
+.x-line {
+    border: none; /* remove default */
+    border-top: 0.1px solid #cccccc7f; /* set custom thickness and color */
+    margin: 0.7rem 0 0.2rem;
 }
 main.main-section {
     display: grid;
@@ -187,6 +207,8 @@ div {
 }
 .search-location button:hover {
     background: var(--container-bg);
+    transform: translate(0, 0) scale(1.02);
+    transition: all 0.19s ease-in-out;
 }
 .search-location input {
     height: 3rem;

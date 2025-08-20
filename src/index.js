@@ -9,8 +9,10 @@ const mainController = (() => {
     const searchLocationInput = document.querySelector("#search-input");
     const searchLocationButton = document.querySelector(".search-button");
     const addFavLocationButton = document.querySelector(".add-fav button");
+    const favCityListItem = document.querySelector("#fav-city");
     let globalCityValue;
     // const apiKey="21522390f9b0f28b34db2255350fa66a";
+
     function updateFavArray(arr) {
         const newArr = arr;
         for (let i = 0; i < dataState.favLocationArr.length; i++) {
@@ -38,19 +40,16 @@ const mainController = (() => {
         return responseArr;
     }
     async function getWeather() {
-        console.log("hey");
         try {
             let location = globalCityValue;
             let cityInstance;
             if (location) {
                 location = location.replace(" ", ",");
-                console.log(location);
                 const time1 = helpers.getTime();
                 const coordResponse = await helpers.getData(
                     helpers.getUrl(location).coordUrl
                 );
                 console.log(helpers.getElapsedTime(time1));
-                console.table(coordResponse);
                 const coordData = data.bundleCoordData(coordResponse);
                 const coord = [
                     coordData.coordinates[0],
@@ -69,8 +68,6 @@ const mainController = (() => {
                 else
                     cityInstance =
                         dataState.currentCity.updateCityData(bundledData);
-                console.log(bundledData);
-                console.log(cityInstance);
                 helpers.updateState(cityInstance);
                 console.log(helpers.getElapsedTime(time1));
             } else if (!location) {
@@ -80,23 +77,35 @@ const mainController = (() => {
             console.log(error);
         }
     }
-    addFavLocationButton.addEventListener("click", () => {
+    async function updateGlobalWeatherObject() {
+        await getCityWeather();
+        await getWeather();
+    }
+    favCityListItem.addEventListener("click", async (e) => {
+        if (e.target.closest(".city-list-item")) {
+            const cityElementSelected = e.target.closest(".city-list-item");
+            console.log(cityElementSelected);
+            const selectedCity = helpers.findSelectedLocation(
+                cityElementSelected.getAttribute("data-id")
+            );
+            await getCityWeather();
+            helpers.updateState(selectedCity);
+        }
+    });
+    addFavLocationButton.addEventListener("click", async () => {
         dataState.renderMode = "manual";
         helpers.updateFavCollection();
+        await updateGlobalWeatherObject();
+        dataState.renderMode = "auto";
     });
-    searchLocationButton.addEventListener("click", () => {
+    searchLocationButton.addEventListener("click", async () => {
         globalCityValue = searchLocationInput.value;
         dataState.renderMode = "manual";
-        getWeather();
+        await updateGlobalWeatherObject();
+        dataState.renderMode = "auto";
     });
     setInterval(async () => {
         dataState.renderMode = "auto";
-        await getWeather();
-        console.log(JSON.parse(JSON.stringify(dataState)));
-        await getCityWeather();
-        console.log(JSON.parse(JSON.stringify(dataState)));
-
-        helpers.updateFavCollection();
-        console.log(dataState);
-    }, 360000);
+        await updateGlobalWeatherObject();
+    }, 3600000); // update every 1 hour
 })();

@@ -13,6 +13,13 @@ const helpers = (function helpersModule() {
             weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coord[0]}&lon=${coord[1]}&appid=${apiKey}`;
         return { coordUrl, weatherUrl };
     }
+    function findSelectedLocation(dataId) {
+        let selectedCity;
+        dataState.favLocationArr.forEach((city) => {
+            if (city.id === dataId) selectedCity = city;
+        });
+        return selectedCity;
+    }
     async function getData(url) {
         const response = await fetch(url);
         const weather = await response.json();
@@ -41,7 +48,7 @@ const helpers = (function helpersModule() {
     }
     function updateState(city) {
         dataState.currentCity = city;
-        dataState.mode = "main-card";
+        // dataState.mode = "main-card";
         console.log(JSON.parse(JSON.stringify(dataState)));
         render.renderDisplay(dataState);
     }
@@ -50,15 +57,9 @@ const helpers = (function helpersModule() {
             if (dataState.currentCity) {
                 const cityObj = dataState.currentCity;
                 console.log(dataState.renderMode);
-                if (
-                    !searchCoordinates(dataState.favLocationArr, cityObj) ||
-                    dataState.renderMode === "auto"
-                ) {
-                    console.log(dataState.renderMode);
-                    if (dataState.renderMode === "manual")
-                        dataState.favLocationArr.push(cityObj);
-                    dataState.mode = "side-bar";
-                    render.renderDisplay(dataState);
+                if (!searchCoordinates(dataState.favLocationArr, cityObj)) {
+                    dataState.favLocationArr.push(cityObj);
+                    // dataState.mode = "side-bar";
                 } else throw new Error("dupilcate city already exists");
             } else {
                 throw new Error("please enter a city");
@@ -76,6 +77,7 @@ const helpers = (function helpersModule() {
         getTime,
         updateState,
         updateFavCollection,
+        findSelectedLocation,
     };
 })();
 export default helpers;

@@ -10,6 +10,7 @@ class City {
         this.hourlyData = weatherData.hourlyData;
         this.dailyData = weatherData.dailyData;
         this.offset = weatherData.offset;
+        this.id = crypto.randomUUID();
     }
 
     getCityData() {
