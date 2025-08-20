@@ -7,7 +7,12 @@
     padding: 0;
 }
 :root {
-    --body-bg: rgba(0, 0, 0, 0.767);
+    --body-bg: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.984),
+        rgba(0, 0, 0, 0.821)
+    );
+
     --main-font-family: "Poppins", sans-serif;
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.135);
@@ -40,7 +45,7 @@ h3 {
     display: grid;
     grid-template-areas: header main footer;
     grid-template-rows: 1.5fr 20fr 1fr;
-    background-color: var(--body-bg);
+    background: var(--body-bg);
     gap: 1rem;
 }
 .container > * {
@@ -115,7 +120,7 @@ main.main-section {
     padding: 1.5rem clamp(50px, calc(1rem + 3vw), 150px);
 }
 .main-section > * {
-    height: 100%;
+    min-height: 23rem;
 }
 
 .city-details {
@@ -132,23 +137,60 @@ main.main-section {
 .temp {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 1rem;
+    padding: 0.4rem 1rem;
     justify-content: space-between;
 }
 .temp {
     padding: 1.5rem 2rem;
     gap: 2rem;
 }
+.map-section {
+    align-items: center;
+    gap: 0.5rem;
+}
 
 .sidebar,
 .city-details > * {
-    box-shadow: 0px 0px 10px 1px #e4e4e42f;
+    /* box-shadow: 0px 0px 10px 1px #e4e4e42f; */
     border-radius: 1rem;
     min-width: 200px;
 }
 .sidebar,
-.city-details .temp {
-    background-color: rgb(0, 0, 24);
+.city-details .temp,
+.map-section {
+    background: rgb(0 0 0 / 64%);
+    align-self: center;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 8px 16px rgba(0, 0, 0, 0.25);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    background: rgba(2, 2, 2, 0.761);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sidebar:hover,
+.city-details > *:hover {
+    transform: translateY(-6px); /* subtle lift */
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.35),
+        0 16px 32px rgba(0, 0, 0, 0.3);
+}
+.container:has(.temp#clear) .sidebar,
+.container:has(.temp#clear) .temp,
+.container:has(.temp#clear) .map-section {
+    box-shadow: 0 0 25px rgba(255, 217, 0, 0.134);
+}
+.container:has(.temp#clouds) .sidebar,
+.container:has(.temp#clouds) .temp,
+.container:has(.temp#clouds) .map-section {
+    box-shadow: 0 0 25px rgba(100, 148, 237, 0.194);
+}
+.container:has(.temp#rain) .sidebar,
+.container:has(.temp#rain) .temp,
+.container:has(.temp#rain) .map-section {
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.269);
 }
 footer > p {
     letter-spacing: 0.4rem;
@@ -167,35 +209,36 @@ header h1 {
     display: flex;
     position: relative;
     overflow: hidden;
-    gap: 0.5rem;
+    gap: 0;
+    width: 100%;
 }
 div {
     color: var(--text-color);
 }
 .search-location button {
-    padding: 0.3rem;
-    width: 3rem;
-    height: 3rem;
     border: none;
     right: 0;
     background-color: transparent;
     color: white;
 }
+.search-location .search-button {
+    width: 3rem;
+    height: 3rem;
+}
+.add-fav {
+    display: flex;
+    justify-content: center;
+}
 .search-location .add-fav button {
     display: flex;
-    width: 6rem;
-    font-size: 1rem;
-    letter-spacing: 0.1rem;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
     background-color: rgba(0, 0, 0, 0.272);
     border-radius: 2rem;
 }
 .add-fav button span {
     background-color: rgba(255, 255, 255, 0.083);
     border-radius: 50%;
-    padding: 0.2rem;
     width: 24px;
     aspect-ratio: 1;
     display: flex;
@@ -205,16 +248,19 @@ div {
     position: absolute;
     right: 0;
 }
-.search-location button:hover {
-    background: var(--container-bg);
+.search-location button:hover,
+.unit:hover {
+    background: rgba(255, 255, 255, 0.128);
     transform: translate(0, 0) scale(1.02);
     transition: all 0.19s ease-in-out;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 .search-location input {
-    height: 3rem;
-    width: 20rem;
+    height: 2.5rem;
+    width: 90%;
     padding: 0.7rem;
-    background-color: rgba(224, 224, 224, 0.144);
+    background-color: rgba(29, 29, 29, 0.759);
     outline: none;
     border: none;
     border-radius: 0.5rem;
@@ -244,10 +290,25 @@ div {
 #current-temp {
     font-size: min(calc(50px + 5vw), 7rem);
 }
+.unit {
+    padding: 0.5rem;
+}
+.unit.on {
+    font-size: 4rem;
+}
+.units > * {
+    font-size: 1rem;
+}
+.cel + span {
+    font-weight: 100;
+}
 .current-icon {
     display: inline-block;
     border: 2px solid rgba(255, 255, 255, 0.137);
-    border-top: 6px solid rgb(255, 255, 210);
+    border-top: 1px solid rgb(255, 255, 210);
+    border-left: 1px solid rgb(255, 255, 210);
+    border-top: 1px solid rgb(255, 255, 210);
+
     border-bottom: none;
     border-radius: 50%;
 
@@ -302,7 +363,8 @@ div {
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 1px #0a0a0a;
     position: relative;
-    height: 90%;
+    height: 27rem;
+    margin-bottom: 0.4rem;
 }
 .leaflet-popup-content-wrapper {
     background-color: #2c2c2c9c; /* Dark background */

@@ -3,5 +3,6 @@ const dataState = {
     favLocationArr: [],
     mode: "",
     renderMode: "", // auto || manual
+    unit: "c",
 };
 export default dataState;

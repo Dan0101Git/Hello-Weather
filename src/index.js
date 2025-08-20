@@ -10,6 +10,7 @@ const mainController = (() => {
     const searchLocationButton = document.querySelector(".search-button");
     const addFavLocationButton = document.querySelector(".add-fav button");
     const favCityListItem = document.querySelector("#fav-city");
+    const units = document.querySelector(".temp");
     let globalCityValue;
     // const apiKey="21522390f9b0f28b34db2255350fa66a";
 
@@ -81,6 +82,18 @@ const mainController = (() => {
         await getCityWeather();
         await getWeather();
     }
+    units.addEventListener("click", async (e) => {
+        let unitSelected = e.target.closest(".unit");
+        if (unitSelected && dataState.unit !== unitSelected.id[0]) {
+            unitSelected = e.target.closest(".unit");
+
+            // eslint-disable-next-line prefer-destructuring
+            dataState.unit = unitSelected.getAttribute("id");
+            await updateGlobalWeatherObject();
+        }
+
+        // eslint-disable-next-line prefer-destructuring
+    });
     favCityListItem.addEventListener("click", async (e) => {
         if (e.target.closest(".city-list-item")) {
             const cityElementSelected = e.target.closest(".city-list-item");

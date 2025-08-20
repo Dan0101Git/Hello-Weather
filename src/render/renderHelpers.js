@@ -1,3 +1,5 @@
+import dataState from "../dataState";
+
 const apiKey = "21522390f9b0f28b34db2255350fa66a";
 const mapApiKey = "c3438d2bec484858b1e2ad9c135fd18d";
 const displayContainer = document.querySelector(".temp .current-weather");
@@ -42,7 +44,10 @@ const rendHlper = (function renderHelpers() {
         return map;
     }
     function getTempinC(tempinK) {
-        return parseInt(tempinK - 273, 10);
+        const tempC = parseInt(tempinK - 273, 10);
+        const tempF = parseInt((tempC * 9) / 5 + 32, 10);
+        const temp = dataState.unit === "c" ? tempC : tempF;
+        return temp;
     }
     function getDate(numberDate, offset) {
         const date = new Date((numberDate + offset - 19800) * 1000);
@@ -193,12 +198,19 @@ const rendHlper = (function renderHelpers() {
 
     function displayCurrentWeather(iconUrl, temp, unit, city) {
         const todayWeatherArray = city.dailyData[0];
+        const currentUnit = dataState.unit;
         console.log(city.currentData);
         const currentTempDiv = document.createElement("div");
+        const tempCard = document.querySelector(".temp");
+
+        tempCard.setAttribute(
+            "id",
+            `${city.currentData.weather[0].main.toLowerCase()}`
+        );
         currentTempDiv.classList.add("temp-icon");
         const weatherDescriptHtml = `<div class="weather-descrip"><span>${city.currentData.weather[0].description}</span></div>`;
         const minMaxHtml = `<div class="weather-minmax"><span>H:${getTempinC(todayWeatherArray.temp.max)}° L:${getTempinC(todayWeatherArray.temp.min)}°</span></div>`;
-        currentTempDiv.innerHTML = `<div><span id="current-temp">${temp}°${unit}</span>${weatherDescriptHtml}${minMaxHtml}</div><div class="icon"><span class="current-icon"><img src=${iconUrl}></span></div>`;
+        currentTempDiv.innerHTML = `<div><span id="current-temp">${temp}°</span><span class="units"><span class="unit cel" id="c">C</span><span>|</span><span class="unit fah" id="f">F</span></span>${weatherDescriptHtml}${minMaxHtml}</div><div class="icon"><span class="current-icon"><img src=${iconUrl}></span></div>`;
 
         return currentTempDiv;
     }
@@ -234,6 +246,7 @@ const rendHlper = (function renderHelpers() {
                 address
             )
         );
+        document.getElementById(dataState.unit).classList.add("on");
     }
 
     return {
