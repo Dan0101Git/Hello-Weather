@@ -6,13 +6,18 @@ class City {
         this.state = weatherData.state;
         this.country = weatherData.country;
         this.coordinates = weatherData.coordinates;
-        this.currentData = weatherData.current;
-        this.hourlyData = weatherData.hourly;
-        this.dailyData = weatherData.daily;
-        this.offset = weatherData.timezoneOffset;
+        this.currentData = weatherData.currentData;
+        this.hourlyData = weatherData.hourlyData;
+        this.dailyData = weatherData.dailyData;
+        this.offset = weatherData.offset;
     }
 
     getCityData() {
+        return this;
+    }
+
+    updateCityData(updatedData) {
+        Object.assign(this, updatedData);
         return this;
     }
 }

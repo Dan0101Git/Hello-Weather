@@ -46,12 +46,10 @@ const rendHlper = (function renderHelpers() {
     }
     function getDate(numberDate, offset) {
         const date = new Date((numberDate + offset - 19800) * 1000);
-        console.log(date);
         const options1 = { day: "2-digit", month: "short", year: "numeric" };
         const currentDate = date.toLocaleDateString("en-GB", options1);
         const options2 = { hour: "2-digit", minute: "2-digit", hour12: true };
         const options3 = { hour: "2-digit", minute: "2-digit", hour12: false };
-        console.log(date.toLocaleTimeString());
         const currentTime = date.toLocaleTimeString("en-GB", options2);
         const graphTime = date.toLocaleTimeString("en-GB", options3);
         return { currentDate, currentTime, graphTime };
@@ -220,6 +218,7 @@ const rendHlper = (function renderHelpers() {
             address.currentData.dt,
             address.offset
         );
+        console.log(currentDatenTime);
         const dateNTimeHtml = `<div class="date-time"><span>${currentDatenTime.currentDate}</span><span>${currentDatenTime.currentTime}</span></div>`;
         const addresssDiv = document.createElement("div");
         addresssDiv.classList.add("address-div");
@@ -237,6 +236,13 @@ const rendHlper = (function renderHelpers() {
         );
     }
 
-    return { resetRender, buildMap, renderLocationAddress, createChart };
+    return {
+        getDate,
+        getTempinC,
+        resetRender,
+        buildMap,
+        renderLocationAddress,
+        createChart,
+    };
 })();
 export default rendHlper;

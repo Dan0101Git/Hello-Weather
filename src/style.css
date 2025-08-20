@@ -55,6 +55,39 @@ footer {
     justify-content: center;
     align-items: center;
 }
+.sidebar #fav-city {
+    display: flex;
+    flex-direction: column;
+}
+#fav-city .city-list-item {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+}
+.city-list-item .uppersec,
+.city-list-item .lower-sec > div {
+    display: flex;
+    justify-content: space-between;
+}
+.city-list-item .uppersec {
+    align-items: center;
+}
+.city-list-item .uppersec .left {
+    display: flex;
+    flex-direction: column;
+}
+.uppersec .left .city-time {
+    font-size: 0.7rem;
+}
+.uppersec .right .current-temp-list {
+    font-size: 2.5rem;
+}
+.city-list-item .lower-sec {
+    font-size: 0.85rem;
+    letter-spacing: 0.06rem;
+}
 main.main-section {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -71,7 +104,6 @@ main.main-section {
 }
 .city-details .temp {
     flex: 5;
-    background-color: rgba(0, 0, 24, 0.812);
 }
 .map-section {
     flex: 2;
@@ -94,9 +126,9 @@ main.main-section {
     border-radius: 1rem;
     min-width: 200px;
 }
-.sidebar {
-    background-color: rgba(255, 255, 255, 0.058);
-    background-color: rgba(0, 0, 24, 0.812);
+.sidebar,
+.city-details .temp {
+    background-color: rgb(0, 0, 24);
 }
 footer > p {
     letter-spacing: 0.4rem;

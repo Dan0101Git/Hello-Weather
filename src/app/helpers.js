@@ -41,15 +41,25 @@ const helpers = (function helpersModule() {
     }
     function updateState(city) {
         dataState.currentCity = city;
+        dataState.mode = "main-card";
+        console.log(JSON.parse(JSON.stringify(dataState)));
         render.renderDisplay(dataState);
     }
     function updateFavCollection() {
         try {
             if (dataState.currentCity) {
                 const cityObj = dataState.currentCity;
-                if (!searchCoordinates(dataState.favLocationArr, cityObj))
-                    dataState.favLocationArr.push(cityObj);
-                else throw new Error("dupilcate city already exists");
+                console.log(dataState.renderMode);
+                if (
+                    !searchCoordinates(dataState.favLocationArr, cityObj) ||
+                    dataState.renderMode === "auto"
+                ) {
+                    console.log(dataState.renderMode);
+                    if (dataState.renderMode === "manual")
+                        dataState.favLocationArr.push(cityObj);
+                    dataState.mode = "side-bar";
+                    render.renderDisplay(dataState);
+                } else throw new Error("dupilcate city already exists");
             } else {
                 throw new Error("please enter a city");
             }
