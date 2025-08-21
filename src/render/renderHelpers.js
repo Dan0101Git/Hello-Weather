@@ -75,10 +75,8 @@ const rendHlper = (function renderHelpers() {
         const hourlyDataObj = getHourlyData(cityData);
         const maxValue = Math.max(...hourlyDataObj.tempArr);
         const buffer = maxValue * 0.1;
-        console.log(maxValue);
         const minValue = Math.min(...hourlyDataObj.tempArr);
         const minBuffer = minValue * 0.1;
-        console.log(maxValue, minValue);
 
         return {
             type: "line", // The type of chart
@@ -165,12 +163,10 @@ const rendHlper = (function renderHelpers() {
         if (hourlyChart) hourlyChart.destroy();
         Chart.register(ChartDataLabels);
         hourlyChart = new Chart(ctx, getChartObject(cityData, gradient));
-        console.log(hourlyChart);
     }
     function buildMap(coord, tempinK) {
         if (!mapTile) {
             mapTile = createMap(coord);
-            console.log(mapTile);
         } else {
             mapTile.setView(coord, 7);
         }
@@ -189,7 +185,6 @@ const rendHlper = (function renderHelpers() {
             .addTo(mapTile)
             .bindPopup(`${getTempinC(tempinK)}`)
             .openPopup();
-        console.log(mapTile);
     }
     function getUnit() {
         const currentUnit = "C";
@@ -199,7 +194,6 @@ const rendHlper = (function renderHelpers() {
     function displayCurrentWeather(iconUrl, temp, unit, city) {
         const todayWeatherArray = city.dailyData[0];
         const currentUnit = dataState.unit;
-        console.log(city.currentData);
         const currentTempDiv = document.createElement("div");
         const tempCard = document.querySelector(".temp");
 
@@ -218,19 +212,15 @@ const rendHlper = (function renderHelpers() {
         // const mainWeatherTypes={
         //   //  Clear,Clouds,Thunderstorm,Drizzle,Rain,Snow,Atmosphere
         // }
-        console.log(icon);
         return `https://raw.githubusercontent.com/Dan0101Git/Hello-Weather/refs/heads/main/src/images/icons/${icon}.svg`;
     }
     function renderLocationAddress(address) {
-        console.log(address.currentData.weather[0].icon);
         const weatherIcon = address.currentData.weather[0].icon;
         const weatherIconUrl = getIcon(weatherIcon);
-        console.log(address.currentData.dt);
         const currentDatenTime = getDate(
             address.currentData.dt,
             address.offset
         );
-        console.log(currentDatenTime);
         const dateNTimeHtml = `<div class="date-time"><span>${currentDatenTime.currentDate}</span><span>${currentDatenTime.currentTime}</span></div>`;
         const addresssDiv = document.createElement("div");
         addresssDiv.classList.add("address-div");

@@ -64,6 +64,7 @@ footer {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
+    margin-bottom: 2rem;
 }
 #fav-city .city-list-item {
     list-style-type: none;
@@ -83,7 +84,11 @@ footer {
     transform: translate(0, 0) scale(1.009);
     transition: all 0.3s ease-in-out;
 }
-.city-list-item:hover hr {
+.city-list-item.location-on {
+    background-color: rgba(128, 128, 128, 0.343);
+}
+.city-list-item:hover hr,
+.city-list-item.location-on hr {
     visibility: hidden;
 }
 .city-list-item .uppersec,
@@ -158,17 +163,39 @@ main.main-section {
 .sidebar,
 .city-details .temp,
 .map-section {
-    background: rgb(0 0 0 / 64%);
     align-self: center;
     box-shadow:
-        0 4px 8px rgba(0, 0, 0, 0.3),
-        0 8px 16px rgba(0, 0, 0, 0.25);
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        /* deep shadow */ 0 0 20px rgba(255, 255, 255, 0.05); /* subtle outer glow */
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
     background: rgba(2, 2, 2, 0.761);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sidebar,
+.city-details .temp,
+.map-section {
+    border-radius: 16px;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.08),
+        /* soft near shadow */ 0 12px 20px rgba(0, 0, 0, 0.12),
+        /* medium */ 0 20px 40px rgba(0, 0, 0, 0.08); /* far diffused shadow */
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+.sidebar,
+.city-details .temp,
+.map-section {
+    background: linear-gradient(145deg, #020202b4, #030303);
+    border-radius: 20px;
+    box-shadow:
+        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
+        /* inner shadow */ inset -2px -2px 5px rgba(255, 255, 255, 0.209),
+        /* highlight */ 0 2px 6px rgba(0, 0, 0, 0.225); /* external shadow */
 }
 .sidebar:hover,
 .city-details > *:hover {
@@ -177,20 +204,80 @@ main.main-section {
         0 8px 16px rgba(0, 0, 0, 0.35),
         0 16px 32px rgba(0, 0, 0, 0.3);
 }
+.sidebar::before,
+.city-details .temp::before,
+.map-section::before {
+    content: "";
+    position: absolute;
+    inset: -10px; /* bigger than card */
+    border-radius: inherit;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.08),
+        transparent 70%
+    );
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.6;
+}
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.city-details .temp {
+    animation: float 1.5s ease-in-out infinite;
+}
+
 .container:has(.temp#clear) .sidebar,
 .container:has(.temp#clear) .temp,
 .container:has(.temp#clear) .map-section {
-    box-shadow: 0 0 25px rgba(255, 217, 0, 0.134);
+    box-shadow:
+        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
+        /* inner shadow */ inset -2px -2px 5px rgba(114, 114, 114, 0.209),
+        /* highlight */ 0 0 15px rgba(255, 217, 0, 0.134);
 }
 .container:has(.temp#clouds) .sidebar,
 .container:has(.temp#clouds) .temp,
 .container:has(.temp#clouds) .map-section {
-    box-shadow: 0 0 25px rgba(100, 148, 237, 0.194);
+    box-shadow:
+        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
+        /* inner shadow */ inset -2px -2px 5px rgba(114, 114, 114, 0.209),
+        /* highlight */ 0 0 15px rgba(100, 148, 237, 0.194);
 }
 .container:has(.temp#rain) .sidebar,
 .container:has(.temp#rain) .temp,
 .container:has(.temp#rain) .map-section {
-    box-shadow: 0 0 25px rgba(0, 191, 255, 0.269);
+    box-shadow:
+        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
+        /* inner shadow */ inset -2px -2px 5px rgba(114, 114, 114, 0.209),
+        /* highlight */ 0 0 15px rgba(0, 191, 255, 0.269);
+}
+.container:has(.temp#clouds) .current-icon {
+    border-top: 3px solid rgba(100, 148, 237, 0.194);
+    border-left: 3px solid rgba(100, 148, 237, 0.194);
+    border-top: 3px solid rgba(100, 148, 237, 0.194);
+
+    border-bottom: none;
+}
+.container:has(.temp#clear) .current-icon {
+    border-top: 3px solid rgba(255, 217, 0, 0.378);
+    border-left: 3px solid rgba(251, 217, 24, 0.352);
+    border-top: 3px solid rgba(255, 217, 0, 0.134);
+
+    border-bottom: none;
+}
+.container:has(.temp#rain) .current-icon {
+    border-top: 3px solid rgba(0, 191, 255, 0.269);
+    border-left: 3px solid rgba(0, 191, 255, 0.269);
+    border-top: 3px solid rgba(0, 191, 255, 0.269);
+
+    border-bottom: none;
 }
 footer > p {
     letter-spacing: 0.4rem;

@@ -64,11 +64,8 @@ const mainController = (() => {
                 console.log(weather);
                 data.bundleData(coordResponse, weather);
                 const bundledData = data.getWeatherData();
-                if (dataState.renderMode === "manual")
-                    cityInstance = new City(bundledData);
-                else
-                    cityInstance =
-                        dataState.currentCity.updateCityData(bundledData);
+                cityInstance = new City(bundledData);
+
                 helpers.updateState(cityInstance);
                 console.log(helpers.getElapsedTime(time1));
             } else if (!location) {
@@ -82,6 +79,18 @@ const mainController = (() => {
         await getCityWeather();
         await getWeather();
     }
+    async function updateStaticLocation(liveCity) {
+        try {
+            if (liveCity) {
+                await getCityWeather();
+                helpers.updateState(liveCity);
+            } else {
+                throw new Error("no city selectedd");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     units.addEventListener("click", async (e) => {
         let unitSelected = e.target.closest(".unit");
         if (unitSelected && dataState.unit !== unitSelected.id[0]) {
@@ -89,7 +98,7 @@ const mainController = (() => {
 
             // eslint-disable-next-line prefer-destructuring
             dataState.unit = unitSelected.getAttribute("id");
-            await updateGlobalWeatherObject();
+            updateStaticLocation(dataState.currentCity);
         }
 
         // eslint-disable-next-line prefer-destructuring
@@ -101,24 +110,20 @@ const mainController = (() => {
             const selectedCity = helpers.findSelectedLocation(
                 cityElementSelected.getAttribute("data-id")
             );
-            await getCityWeather();
-            helpers.updateState(selectedCity);
+            console.log(selectedCity);
+            updateStaticLocation(selectedCity);
         }
     });
     addFavLocationButton.addEventListener("click", async () => {
         dataState.renderMode = "manual";
         helpers.updateFavCollection();
-        await updateGlobalWeatherObject();
-        dataState.renderMode = "auto";
+        updateStaticLocation(dataState.currentCity);
     });
     searchLocationButton.addEventListener("click", async () => {
         globalCityValue = searchLocationInput.value;
-        dataState.renderMode = "manual";
         await updateGlobalWeatherObject();
-        dataState.renderMode = "auto";
     });
     setInterval(async () => {
-        dataState.renderMode = "auto";
-        await updateGlobalWeatherObject();
+        updateStaticLocation(dataState.currentCity);
     }, 3600000); // update every 1 hour
 })();

@@ -6,6 +6,8 @@ const renderSidebar = (() => {
     function makeListItem(city) {
         const cityListItem = document.createElement("li");
         cityListItem.classList.add("city-list-item");
+        if (dataState.currentCity.id === city.id)
+            cityListItem.classList.add("location-on");
         cityListItem.setAttribute("data-id", city.id);
         const todayWeatherArray = city.dailyData[0];
         const upperSecHtml = ` <div class="left"><span class="city-title">${city.name}</span><span class="city-time">${rendHlper.getDate(city.currentData.dt, city.offset).graphTime}</span></div>
