@@ -30,6 +30,24 @@
         rgb(7, 35, 33),
         rgb(0, 0, 0)
     );
+    --grad-bg: linear-gradient(
+        to left,
+        rgba(113, 113, 28, 0.968),
+        rgb(72, 70, 51),
+        rgba(237, 237, 237, 0.162)
+    );
+    --grad-bg-clouds: linear-gradient(
+        to left,
+        rgb(0, 0, 0),
+        rgb(52, 56, 70),
+        rgb(0, 0, 0)
+    );
+    --grad-bg-rainy: linear-gradient(
+        to left,
+        rgb(0, 0, 0),
+        rgb(7, 35, 33),
+        rgb(0, 0, 0)
+    );
     --accent-bg-clear: #3f3a2c;
     --accent-bg-clouds: rgb(52, 56, 70);
     --accent-bg-rainy: rgb(52, 70, 69);
@@ -118,12 +136,10 @@ footer {
 .city-list-item.location-on {
     background-color: rgba(128, 128, 128, 0.343);
 }
-.container:has(.temp#rain) .location-on,
-.container:has(.temp#rain) .day-list-item {
+.container:has(.temp#rain) .location-on {
     background-color: var(--accent-bg-rainy);
 }
-.container:has(.temp#clouds) .location-on,
-.container:has(.temp#clouds) .day-list-item {
+.container:has(.temp#clouds) .location-on {
     background-color: var(--accent-bg-clouds);
 }
 .container:has(.temp#clear) .location-on {
@@ -150,9 +166,9 @@ footer {
 }
 .day-list-item .temp-grad {
     display: inline-block;
-    width: 4rem;
+    width: 8rem;
     height: 0.2rem;
-    background: white;
+    background: var(--grad-bg);
 }
 .city-list-item .uppersec {
     align-items: center;
@@ -271,7 +287,7 @@ main.main-section {
 }
 
 .city-details .temp {
-    animation: float 1.5s ease-in-out infinite;
+    animation: float 3.5s ease-in-out infinite;
 }
 
 .container:has(.temp#clear) .card {
@@ -312,6 +328,43 @@ main.main-section {
     border-top: 3px solid rgba(0, 191, 255, 0.269);
 
     border-bottom: none;
+}
+.current-icon {
+    animation: pulse 3s ease-in-out infinite;
+}
+.container:has(.temp#clear) .current-icon {
+    animation: pulse2 3s ease-in-out infinite;
+}
+.container:has(.temp#clouds) .current-icon {
+    animation: pulse2 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    }
+}
+@keyframes pulse2 {
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(205, 188, 113, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(105, 96, 0, 0.873);
+    }
+}
+@keyframes pulse3 {
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    }
 }
 footer > p {
     letter-spacing: 0.4rem;
@@ -530,7 +583,7 @@ div {
 }
 
 .chart-container {
-    height: 14rem;
+    height: 11rem;
 }
 #map {
     width: min(100%, 400px);
