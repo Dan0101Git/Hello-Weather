@@ -15,7 +15,7 @@
     --body-bg: linear-gradient(
         to top,
         rgb(0, 0, 0),
-        rgb(63, 58, 44),
+        rgb(86, 86, 75),
         rgb(0, 0, 0)
     );
     --body-bg-clouds: linear-gradient(
@@ -27,7 +27,7 @@
     --body-bg-rainy: linear-gradient(
         to top,
         rgb(0, 0, 0),
-        rgb(52, 70, 69),
+        rgb(7, 35, 33),
         rgb(0, 0, 0)
     );
     --accent-bg-clear: #3f3a2c;
@@ -37,7 +37,7 @@
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.135);
     --border-radius: 1rem;
-    --base-font-size: clamp(12px, calc(6px + 0.6vw), 5vw);
+    --base-font-size: clamp(11px, calc(6px + 0.5vw), 5vw);
     --text-color: #ffffff;
 }
 html,
@@ -86,14 +86,16 @@ footer {
     justify-content: center;
     align-items: center;
 }
-.sidebar #fav-city {
+.sidebar #fav-city,
+#weekly-forecast {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
     margin-bottom: 2rem;
     gap: 0.5rem;
 }
-#fav-city .city-list-item {
+#fav-city .city-list-item,
+#weekly-forecast .day-list-item {
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -102,10 +104,12 @@ footer {
     padding-bottom: 0;
     border-radius: 0.5rem;
 }
-#fav-city .city-list-item + .city-list-item {
+#fav-city .city-list-item + .city-list-item,
+.day-list-item + .day-list-item {
     padding: 0 0.8rem;
 }
-.city-list-item:hover {
+.city-list-item:hover,
+.day-list-item:hover {
     background-color: rgba(128, 128, 128, 0.343);
     cursor: pointer;
     transform: translate(0, 0) scale(1.009);
@@ -114,10 +118,12 @@ footer {
 .city-list-item.location-on {
     background-color: rgba(128, 128, 128, 0.343);
 }
-.container:has(.temp#rain) .location-on {
+.container:has(.temp#rain) .location-on,
+.container:has(.temp#rain) .day-list-item {
     background-color: var(--accent-bg-rainy);
 }
-.container:has(.temp#clouds) .location-on {
+.container:has(.temp#clouds) .location-on,
+.container:has(.temp#clouds) .day-list-item {
     background-color: var(--accent-bg-clouds);
 }
 .container:has(.temp#clear) .location-on {
@@ -132,6 +138,22 @@ footer {
     display: flex;
     justify-content: space-between;
 }
+.day-list-item .uppersec {
+    display: flex;
+    gap: 2rem;
+}
+.day-list-item .uppersec .left,
+.day-list-item .right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.day-list-item .temp-grad {
+    display: inline-block;
+    width: 4rem;
+    height: 0.2rem;
+    background: white;
+}
 .city-list-item .uppersec {
     align-items: center;
 }
@@ -139,6 +161,7 @@ footer {
     display: flex;
     flex-direction: column;
 }
+
 .uppersec .left .city-time {
     font-size: 0.7rem;
 }
@@ -171,8 +194,12 @@ main.main-section {
 .city-details .temp {
     flex: 5;
 }
-section {
+.section {
     flex: 2;
+    align-items: stretch;
+}
+.section .card {
+    align-self: stretch;
 }
 .section,
 .temp {
@@ -203,7 +230,7 @@ section {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 .card {
-    background: linear-gradient(145deg, #020202b4, #030303);
+    background: linear-gradient(to left, #0202029a, #030303);
     border-radius: 20px;
     box-shadow:
         inset 2px 2px 6px rgba(0, 0, 0, 0.559),
@@ -465,6 +492,7 @@ div {
 .add-data-carousel {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 .add-data-carousel > * {
     display: flex;
@@ -475,6 +503,20 @@ div {
     background-color: rgba(108, 108, 108, 0.1);
     border-radius: 0.8rem;
     padding: 0.7rem;
+}
+.add-data-carousel .property {
+    display: flex;
+    gap: 0.2rem;
+}
+.add-data-icon-img {
+    width: 1.2rem;
+}
+.property .add-image-title {
+    font-size: 0.6rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.661);
 }
 .hourly-chart {
     display: flex;

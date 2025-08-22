@@ -13,32 +13,40 @@ const renderAdditional = (() => {
     function createBox(property) {
         const boxItem = document.createElement("div");
         boxItem.classList.add("add-item-box");
-        boxItem.innerHTML = `<span class="add-data-icon"><img class="add-data-icon-img" src=${property.icon}></span><span class="add-data-data">${property.data}</span>`;
+        boxItem.innerHTML = `<div class="property"><span class="add-data-icon"><img class="add-data-icon-img" src=${property.icon}></span><span class="add-image-title">${property.title}</span></div><span class="add-data-data">${property.data}</span>`;
         return boxItem;
     }
     function getHumidity(city) {
-        return { data: city.currentData.humidity, icon: humidC };
+        return {
+            title: "Humidity",
+            data: `${city.currentData.humidity} %`,
+            icon: humidC,
+        };
     }
     function getFeelTemp(city) {
         return {
-            data: rendHlper.getTempinC(city.currentData.feels_like),
+            title: "Feels Like",
+            data: `${rendHlper.getTempinC(city.currentData.feels_like)}°`,
             icon: popC,
         };
     }
     function getWind(city) {
         return {
-            data: `${parseInt((city.currentData.wind_speed * 18) / 5, 10)}km/h`,
+            title: "Wind Speed",
+            data: `${parseInt((city.currentData.wind_speed * 18) / 5, 10)} km/h`,
             icon: windC,
         };
     }
     function getVisibility(city) {
         return {
-            data: parseInt(city.currentData.visibility / 1000, 10),
+            title: "Visbility",
+            data: `${parseInt(city.currentData.visibility / 1000, 10)} km`,
             icon: visbilityC,
         };
     }
     function getUvi(city) {
         return {
+            title: "UV Index",
             data: parseInt(city.currentData.uvi * 10, 10) / 10,
             icon: uviC,
         };

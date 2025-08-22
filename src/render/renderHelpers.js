@@ -50,13 +50,16 @@ const rendHlper = (function renderHelpers() {
     }
     function getDate(numberDate, offset) {
         const date = new Date((numberDate + offset - 19800) * 1000);
+        const today = new Date();
         const options1 = { day: "2-digit", month: "short", year: "numeric" };
         const currentDate = date.toLocaleDateString("en-GB", options1);
         const options2 = { hour: "2-digit", minute: "2-digit", hour12: true };
         const options3 = { hour: "2-digit", minute: "2-digit", hour12: false };
+        const options4 = { weekday: "short" };
+        const weekDay = date.toLocaleDateString("en-US", options4);
         const currentTime = date.toLocaleTimeString("en-GB", options2);
         const graphTime = date.toLocaleTimeString("en-GB", options3);
-        return { currentDate, currentTime, graphTime };
+        return { currentDate, currentTime, graphTime, weekDay };
     }
     function getHourlyData(data) {
         const hourlyDataArr = data.hourlyData;
@@ -245,6 +248,7 @@ const rendHlper = (function renderHelpers() {
         buildMap,
         renderLocationAddress,
         createChart,
+        getIcon,
     };
 })();
 export default rendHlper;

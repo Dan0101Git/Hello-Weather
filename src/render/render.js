@@ -1,6 +1,7 @@
 import rendHlper from "./renderHelpers";
 import renderSidebar from "./renderSidebar";
 import renderAdditional from "./renderAddData";
+import renderWeekly from "./renderWeeklyForecast";
 
 const render = (function renderWeather() {
     let addressName;
@@ -24,6 +25,7 @@ const render = (function renderWeather() {
             addressName.coordinates,
             addressName.currentData.temp
         );
+        renderWeekly.makeweeklyCarousel(dataState);
         rendHlper.createChart(addressName);
         renderSidebar.makeSidebar(dataState);
         return null;
