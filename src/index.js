@@ -123,6 +123,14 @@ const mainController = (() => {
         globalCityValue = searchLocationInput.value;
         await updateGlobalWeatherObject();
     });
+    window.addEventListener("keyup", async (e) => {
+        console.log(e.key);
+        if (e.key === "Enter" && e.target.matches("#search-input")) {
+            globalCityValue = searchLocationInput.value;
+            await updateGlobalWeatherObject();
+        }
+        console.log(e.target);
+    });
     setInterval(async () => {
         updateStaticLocation(dataState.currentCity);
     }, 3600000); // update every 1 hour
