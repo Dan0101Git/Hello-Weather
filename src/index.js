@@ -124,7 +124,6 @@ const mainController = (() => {
         await updateGlobalWeatherObject();
     });
     window.addEventListener("keyup", async (e) => {
-        console.log(e.key);
         if (e.key === "Enter" && e.target.matches("#search-input")) {
             globalCityValue = searchLocationInput.value;
             await updateGlobalWeatherObject();

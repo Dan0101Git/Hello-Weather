@@ -11,10 +11,12 @@ let currentMarker;
 
 const rendHlper = (function renderHelpers() {
     function resetRender(div) {
-        const tempChildren = Array.from(div.children);
+        let tempChildren;
+        if (div.children) tempChildren = Array.from(div.children);
 
         tempChildren.forEach((child) => {
-            const grandChildDiv = Array.from(child.children);
+            let grandChildDiv;
+            if (child.children) grandChildDiv = Array.from(child.children);
             grandChildDiv.forEach((grandChild) => {
                 if (grandChild.matches(".hourly-chart")) return;
                 grandChild.remove();
@@ -37,10 +39,7 @@ const rendHlper = (function renderHelpers() {
                 apiKey: personalapi,
             }
         ).addTo(map);
-        L.tileLayer(
-            `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`,
-            { className: "weather-tile-layer" }
-        ).addTo(map);
+        L.tileLayer(``, { className: "weather-tile-layer" }).addTo(map);
         return map;
     }
     function getTempinC(tempinK) {

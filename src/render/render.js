@@ -1,5 +1,6 @@
 import rendHlper from "./renderHelpers";
 import renderSidebar from "./renderSidebar";
+import renderAdditional from "./renderAddData";
 
 const render = (function renderWeather() {
     let addressName;
@@ -18,12 +19,12 @@ const render = (function renderWeather() {
         }
         console.log(JSON.parse(JSON.stringify(addressName)));
         rendHlper.renderLocationAddress(addressName);
+        renderAdditional.makeAdditionalCarousel(dataState);
         rendHlper.buildMap(
             addressName.coordinates,
             addressName.currentData.temp
         );
         rendHlper.createChart(addressName);
-        console.log("this is working");
         renderSidebar.makeSidebar(dataState);
         return null;
     }
