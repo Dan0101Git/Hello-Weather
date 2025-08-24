@@ -82,7 +82,7 @@ h3 {
     width: 100%;
     display: grid;
     grid-template-areas: header main footer;
-    grid-template-rows: 2fr 20fr 1fr;
+    grid-template-rows: 2.5fr 20fr 1fr;
     background: var(--body-bg);
     gap: 0rem;
     padding: 0 10rem;
@@ -159,6 +159,14 @@ footer {
     cursor: pointer;
     transform: translate(0, 0) scale(1.009);
     transition: all 0.3s ease-in-out;
+}
+.temp + div {
+    position: relative;
+    margin-bottom: 7rem;
+}
+.forecast-list {
+    position: absolute;
+    width: 100%;
 }
 .city-list-item.location-on {
     background-color: rgba(128, 128, 128, 0.343);
@@ -277,6 +285,9 @@ main.main-section {
 }
 .card {
     min-height: 23rem;
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.35),
+        0 16px 32px rgba(0, 0, 0, 0.3);
 }
 
 .city-details {
@@ -314,7 +325,6 @@ main.main-section {
 }
 .temp-wrapper {
     max-width: 50rem;
-    align-self: center;
 }
 .section {
     align-items: center;
@@ -324,18 +334,21 @@ main.main-section {
 .card {
     align-self: center;
     min-width: 200px;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(45px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 .card {
-    background: linear-gradient(to right, #020202, #030303b0);
+    background: linear-gradient(to right, #020202, #0303032b);
 
     border-radius: 20px;
     box-shadow:
         inset 2px 2px 6px rgba(0, 0, 0, 0.559),
         /* inner shadow */ inset -1px -1px 5px rgba(255, 255, 255, 0.065),
         /* highlight */ 0 2px 4px rgba(0, 0, 0, 0.225); /* external shadow */
+    box-shadow:
+        0 12px 17px rgba(0, 0, 0, 0.191),
+        0 2px 32px rgba(92, 92, 92, 0.145);
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
@@ -361,24 +374,6 @@ main.main-section {
     animation: float 3.5s ease-in-out infinite;
 }
 
-.container:has(.temp#clear) .card {
-    box-shadow:
-        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
-        /* inner shadow */ inset -2px -2px 5px rgba(114, 114, 114, 0.209),
-        /* highlight */ 0 0 15px rgba(255, 217, 0, 0.134);
-}
-.container:has(.temp#clouds) .card {
-    box-shadow:
-        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
-        /* inner shadow */ inset -2px -2px 5px rgba(114, 114, 114, 0.209),
-        /* highlight */ 0 0 15px rgba(100, 148, 237, 0.194);
-}
-.container:has(.temp#rain) .card {
-    box-shadow:
-        inset 2px 2px 6px rgba(0, 0, 0, 0.08),
-        /* inner shadow */ inset -2px -2px 5px rgba(114, 114, 114, 0.209),
-        /* highlight */ 0 0 15px rgba(0, 191, 255, 0.269);
-}
 .container:has(.temp#clouds) .current-icon {
     border-top: 3px solid rgba(100, 148, 237, 0.194);
     border-left: 3px solid rgba(100, 148, 237, 0.194);
