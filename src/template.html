@@ -38,19 +38,33 @@
                     </div>
                 </div>
                 <div class="city-details">
-                    <div class="temp card">
-                        <div class="current-weather"></div>
-                        <div class="hourly-daily">
-                            <div class="hourly-chart">
-                                <div class="chart-descrip">
-                                    <span>24-hour forecast: </span>
-                                </div>
-                                <div class="chart-container">
-                                    <canvas id="hourlyForecastChart"></canvas>
+                    <div class="temp-wrapper">
+                        <div class="temp card">
+                            <div class="current-weather-wrapper">
+                                <div class="current-weather"></div>
+                                <div class="data-carousel"></div>
+                            </div>
+
+                            <div class="hourly-daily">
+                                <div class="hourly-chart">
+                                    <div class="chart-descrip">
+                                        <span>24-hour forecast: </span>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas
+                                            id="hourlyForecastChart"
+                                        ></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div class="forecast-list">
+                                <ul id="weekly-forecast"></ul>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="section">
                         <div class="map-section card">
                             <div class="search-location">
@@ -71,11 +85,6 @@
                                 </button>
                             </div>
                             <div id="map"></div>
-                        </div>
-                        <div class="card">
-                            <div class="forecast-list">
-                                <ul id="weekly-forecast"></ul>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ const render = (function renderWeather() {
         addressName = city;
         // console.log(address);
         if (document.querySelector(".address-div")) {
-            addresssDiv = document.querySelector(".temp");
+            addresssDiv = document.querySelector(".current-weather-wrapper");
             rendHlper.resetRender(addresssDiv);
         }
         console.log(JSON.parse(JSON.stringify(addressName)));

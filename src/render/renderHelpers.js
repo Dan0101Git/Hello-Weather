@@ -10,6 +10,15 @@ let mapTile;
 let currentMarker;
 
 const rendHlper = (function renderHelpers() {
+    function getColor(mode) {
+        if (mode === "clouds") {
+            return "rgb(123, 152, 246)";
+        }
+        if (mode === "rain") {
+            return "rgb(0, 189, 176)";
+        }
+        return "rgba(250, 243, 159, 0.82)";
+    }
     function resetRender(div) {
         let tempChildren;
         if (div.children) tempChildren = Array.from(div.children);
@@ -24,24 +33,6 @@ const rendHlper = (function renderHelpers() {
         });
     }
 
-    function createMap(coord) {
-        const map = L.map("map", {
-            center: coord,
-            zoom: 7,
-        });
-        const personalapi = "309145bb-921b-4717-90f0-28436fdc48b9";
-        L.tileLayer(
-            // "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-            `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
-            {
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                apiKey: personalapi,
-            }
-        ).addTo(map);
-        L.tileLayer(``, { className: "weather-tile-layer" }).addTo(map);
-        return map;
-    }
     function getTempinC(tempinK) {
         const tempC = parseInt(tempinK - 273, 10);
         const tempF = parseInt((tempC * 9) / 5 + 32, 10);
@@ -65,7 +56,7 @@ const rendHlper = (function renderHelpers() {
         const hourlyDataArr = data.hourlyData;
         const tempArr = [];
         const timeArr = [];
-        for (let i = 0; i <= hourlyDataArr.length / 2; i += 4) {
+        for (let i = 0; i <= hourlyDataArr.length / 2; i += 5) {
             const time = getDate(hourlyDataArr[i].dt, data.offset).graphTime;
             const temp = getTempinC(hourlyDataArr[i].temp);
             tempArr.push(temp);
@@ -79,7 +70,9 @@ const rendHlper = (function renderHelpers() {
         const buffer = maxValue * 0.1;
         const minValue = Math.min(...hourlyDataObj.tempArr);
         const minBuffer = minValue * 0.1;
-
+        const dotColor = getColor(
+            document.querySelector(".temp").getAttribute("id")
+        );
         return {
             type: "line", // The type of chart
             data: {
@@ -88,7 +81,7 @@ const rendHlper = (function renderHelpers() {
                     {
                         label: "Temperature", // This is hidden but good for context
                         data: hourlyDataObj.tempArr, // Your temperature data
-                        borderColor: "rgba(210, 193, 111, 0.8)", // Line color
+                        borderColor: dotColor, // Line color
                         borderWidth: 2,
                         pointBackgroundColor: "#FFFFFF", // Point color
                         fill: true, // Fill the area under the line
@@ -157,14 +150,35 @@ const rendHlper = (function renderHelpers() {
         const ctx = document
             .getElementById("hourlyForecastChart")
             .getContext("2d");
-        const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+        const gradient = ctx.createLinearGradient(0, 0, 0, 110);
         const hourlyDataObj = getHourlyData(cityData);
-
-        gradient.addColorStop(0, "rgba(248, 241, 167, 0.82)");
-        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+        gradient.addColorStop(
+            0,
+            getColor(document.querySelector(".temp").getAttribute("id"))
+        );
+        gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
         if (hourlyChart) hourlyChart.destroy();
         Chart.register(ChartDataLabels);
         hourlyChart = new Chart(ctx, getChartObject(cityData, gradient));
+    }
+
+    function createMap(coord) {
+        const map = L.map("map", {
+            center: coord,
+            zoom: 7,
+        });
+        const personalapi = "309145bb-921b-4717-90f0-28436fdc48b9";
+        L.tileLayer(
+            // "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+            `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
+            {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                apiKey: personalapi,
+            }
+        ).addTo(map);
+        L.tileLayer(``, { className: "weather-tile-layer" }).addTo(map);
+        return map;
     }
     function buildMap(coord, tempinK) {
         if (!mapTile) {

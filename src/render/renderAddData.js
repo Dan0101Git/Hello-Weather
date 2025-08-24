@@ -7,8 +7,9 @@ import visbilityC from "../images/icons/visbility-c.svg";
 import uviC from "../images/icons/uvi-c.svg";
 
 const renderAdditional = (() => {
-    const hourlyChart = document.querySelector(".hourly-chart");
+    const mainWrapper = document.querySelector(".current-weather-wrapper");
     const hourlyDaily = document.querySelector(".hourly-daily");
+    let adiv;
 
     function createBox(property) {
         const boxItem = document.createElement("div");
@@ -52,8 +53,8 @@ const renderAdditional = (() => {
         };
     }
     function makeAdditionalCarousel(data) {
-        const mainCarouselDiv = document.createElement("div");
-        mainCarouselDiv.classList.add(".data-carousel");
+        const mainCarouselDiv = document.querySelector(".data-carousel");
+
         const makeFns = [
             getHumidity,
             getFeelTemp,
@@ -68,7 +69,6 @@ const renderAdditional = (() => {
             carouselDiv.appendChild(box);
         });
         mainCarouselDiv.appendChild(carouselDiv);
-        hourlyDaily.insertBefore(mainCarouselDiv, hourlyChart);
         console.log("hey");
         return carouselDiv;
     }
