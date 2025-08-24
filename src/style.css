@@ -85,6 +85,7 @@ h3 {
     grid-template-rows: 2fr 20fr 1fr;
     background: var(--body-bg);
     gap: 0rem;
+    padding: 0 10rem;
 }
 .container:has(.temp#clouds) {
     background: var(--body-bg-clouds);
@@ -190,7 +191,9 @@ footer {
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: center;
 }
+
 .container
     .temp-wrapper
     .forecast-list
@@ -270,6 +273,7 @@ main.main-section {
     grid-template-columns: 1fr 4fr;
     gap: 2rem;
     padding: 1.5rem clamp(0px, calc(1rem + 1.5vw), 150px);
+    margin: 0 auto;
 }
 .card {
     min-height: 23rem;
@@ -285,7 +289,7 @@ main.main-section {
 }
 .section {
     flex: 2;
-    align-items: stretch;
+    margin: auto 0;
 }
 .section .card {
     align-self: stretch;
@@ -309,7 +313,7 @@ main.main-section {
     gap: 2rem;
 }
 .temp-wrapper {
-    max-width: 55rem;
+    max-width: 50rem;
     align-self: center;
 }
 .section {
@@ -582,6 +586,7 @@ div {
     display: flex;
     gap: 2rem;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .current-weather {
     display: flex;
@@ -670,7 +675,7 @@ div {
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 1px #0a0a0a;
     position: relative;
-    height: 90%;
+    height: 25rem;
     margin-bottom: 0.4rem;
     opacity: 1;
 }
