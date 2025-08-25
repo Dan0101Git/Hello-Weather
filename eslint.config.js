@@ -27,6 +27,7 @@ module.exports = [
                 L: "readonly",
                 Chart: "readonly",
                 ChartDataLabels: "readonly",
+                windyInit: "readonly",
             },
         },
         rules: {

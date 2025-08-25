@@ -163,44 +163,62 @@ const rendHlper = (function renderHelpers() {
     }
 
     function createMap(coord) {
-        const map = L.map("map", {
-            center: coord,
-            zoom: 7,
+        const personalapi = "1fp94SO6RYxAMY69DWA0ZllC63Krpklc";
+
+        const options = {
+            key: personalapi,
+            lat: coord[0],
+            lon: coord[1],
+            zoom: 5,
+            overlay: "temp", // Windy temperature overlay
+        };
+
+        // eslint-disable-next-line no-undef
+        windyInit(options, (windyAPI) => {
+            const { map } = windyAPI;
+            mapTile = map;
+
+            // STEP 1: Create a new pane for our base map
+            map.createPane("basePane");
+
+            // STEP 2: Set its z-index to be very low (lower than Windy's layers)
+            map.getPane("basePane").style.zIndex = 199;
+
+            // STEP 3: Add your tile layer and assign it to the new pane
+            L.tileLayer(
+                `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
+                {
+                    attribution:
+                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    // Use the 'pane' option instead of 'zIndex'
+                    pane: "basePane",
+                }
+            ).addTo(map);
+
+            // The Windy overlay will now correctly display on top
+            windyAPI.store.set("overlay", "temp");
         });
-        const personalapi = "309145bb-921b-4717-90f0-28436fdc48b9";
-        L.tileLayer(
-            // "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-            `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
-            {
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                apiKey: personalapi,
-            }
-        ).addTo(map);
-        L.tileLayer(``, { className: "weather-tile-layer" }).addTo(map);
-        return map;
     }
     function buildMap(coord, tempinK) {
         if (!mapTile) {
-            mapTile = createMap(coord);
+            createMap(coord);
         } else {
             mapTile.setView(coord, 7);
+            if (currentMarker) {
+                mapTile.removeLayer(currentMarker);
+            }
+            currentMarker = L.circleMarker(coord, {
+                radius: 8,
+                fillColor: "#0a0a0a", // A very dark gray fill
+                color: "#000", // Black border
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+            })
+                .addTo(mapTile)
+                .bindPopup(`${getTempinC(tempinK)}`)
+                .openPopup();
         }
-        if (currentMarker) {
-            mapTile.removeLayer(currentMarker);
-        }
-        currentMarker = L.circleMarker(coord, {
-            radius: 8,
-            fillColor: "#0a0a0a", // Orange fill
-            color: "#000", // Black border
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8,
-            display: "none",
-        })
-            .addTo(mapTile)
-            .bindPopup(`${getTempinC(tempinK)}`)
-            .openPopup();
     }
     function getUnit() {
         const currentUnit = "C";

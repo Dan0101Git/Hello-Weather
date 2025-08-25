@@ -30,7 +30,7 @@ const renderWeekly = (() => {
         const lowTemp = rendHlper.getTempinC(data.temp.min);
 
         const SecHtml = ` <div class="left"><span class="day-title">${thisDay}</span><span class="weather-icon"><img src=${weatherIconUrl}></span></div>
-                            <div class="right"><span class="low-grad">${lowTemp}°</span><span class="temp-grad"></span><span class="low-grad" >${highTemp}°</span></div>`;
+                            <div class="right"><span class="low-grad">${lowTemp}°</span><span class="temp-grad" data-id="${highTemp - lowTemp}"></span><span class="low-grad" >${highTemp}°</span></div>`;
 
         dayListItem.innerHTML = `<div class="uppersec">${SecHtml}</div>`;
 

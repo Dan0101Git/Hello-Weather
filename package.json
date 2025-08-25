@@ -48,6 +48,7 @@
     },
     "dependencies": {
         "chartjs-plugin-datalabels": "^2.2.0",
+        "leaflet": "^1.4.0",
         "webpack-merge": "6.0.1"
     },
     "lint-staged": {
