@@ -70,6 +70,11 @@ const helpers = (function helpersModule() {
 
         console.log(dataState.currentCity, dataState.favLocationArr);
     }
+    function deleteFavLocation(dataId) {
+        dataState.favLocationArr = dataState.favLocationArr.filter(
+            (city) => city.id !== dataId
+        );
+    }
     return {
         getUrl,
         getData,
@@ -78,6 +83,7 @@ const helpers = (function helpersModule() {
         updateState,
         updateFavCollection,
         findSelectedLocation,
+        deleteFavLocation,
     };
 })();
 export default helpers;

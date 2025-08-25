@@ -158,6 +158,35 @@ footer {
     transform: translate(0, 0) scale(1.009);
     transition: all 0.3s ease-in-out;
 }
+.city-list-item:hover {
+    background-color: #020202;
+}
+.city-list-item:hover {
+}
+.city-list-item {
+    position: relative;
+}
+.city-list-item .delete-location {
+    position: absolute;
+}
+.city-list-item .delete-location {
+    background: none;
+    border: none;
+    right: 0.5rem;
+    top: 30%;
+    visibility: hidden;
+}
+.city-list-item:hover .delete-location {
+    visibility: visible;
+}
+.delete-location:hover {
+    background-color: gray;
+    border-radius: 0.6rem;
+}
+.city-list-item:hover .right,
+.city-list-item:hover .city-list-minmax {
+    visibility: hidden;
+}
 .temp + div {
     position: relative;
     margin-bottom: 7rem;
@@ -291,22 +320,29 @@ main.main-section {
     .container {
         grid-template-rows: 0.5fr 20fr 1fr;
     }
-
+    .section {
+        flex: 1;
+    }
     .current-weather {
         min-width: 0rem;
     }
     .main-section {
-        display: grid;
-        grid-template-rows: 4fr 1fr;
-        justify-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-    .sidebar {
+    .container .sidebar {
         order: 2;
+        max-width: 35rem;
+        min-width: 30rem;
     }
     .city-details {
         flex-wrap: wrap;
         justify-content: center;
         order: 1;
+    }
+    .temp-wrapper {
+        max-height: 500px;
     }
 }
 @media screen and (max-width: 350px) {
@@ -324,6 +360,7 @@ main.main-section {
 .city-details {
     display: flex;
     gap: 2rem;
+    align-items: center;
 }
 .city-details .temp {
     flex: 3.5;
@@ -352,9 +389,12 @@ main.main-section {
     padding: 1.5rem 2rem;
     gap: 2rem;
 }
-.temp-wrapper {
+.temp-wrapper,
+.card,
+.section {
     max-width: 50rem;
 }
+
 .section {
     align-items: center;
     gap: 1.5rem;

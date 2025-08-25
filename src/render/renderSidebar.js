@@ -1,5 +1,6 @@
 import dataState from "../dataState";
 import rendHlper from "./renderHelpers";
+import deleteButton from "../images/delete.svg";
 
 const renderSidebar = (() => {
     function sortData() {}
@@ -15,7 +16,7 @@ const renderSidebar = (() => {
         const lowerSecthtml = `<div><span class="weather-list-descrip">${city.currentData.weather[0].description}</span><span class="city-list-minmax">H:${rendHlper.getTempinC(todayWeatherArray.temp.max)}° L:${rendHlper.getTempinC(todayWeatherArray.temp.min)}°</span></div>
 `;
         cityListItem.innerHTML = `<div class="uppersec">${upperSecHtml}</div><div class="lower-sec">${lowerSecthtml}</div>`;
-        cityListItem.innerHTML += `<hr class="x-line">`;
+        cityListItem.innerHTML += `<hr class="x-line"> <button class="delete-location"><img src=${deleteButton}></button>`;
         return cityListItem;
     }
     function makeSidebar(dataObject) {

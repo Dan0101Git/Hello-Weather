@@ -10,6 +10,7 @@ const mainController = (() => {
     const searchLocationButton = document.querySelector(".search-button");
     const addFavLocationButton = document.querySelector(".add-fav button");
     const favCityListItem = document.querySelector("#fav-city");
+
     const units = document.querySelector(".temp");
     let globalCityValue;
     // const apiKey="21522390f9b0f28b34db2255350fa66a";
@@ -103,8 +104,16 @@ const mainController = (() => {
 
         // eslint-disable-next-line prefer-destructuring
     });
+    async function deleteLocation(e) {
+        const cityElementSelected = e.target.closest(".city-list-item");
+        console.log(cityElementSelected);
+        helpers.deleteFavLocation(cityElementSelected.getAttribute("data-id"));
+
+        updateStaticLocation(dataState.favLocationArr[0]);
+    }
     favCityListItem.addEventListener("click", async (e) => {
-        if (e.target.closest(".city-list-item")) {
+        if (e.target.closest(".delete-location")) deleteLocation(e);
+        else if (e.target.closest(".city-list-item")) {
             const cityElementSelected = e.target.closest(".city-list-item");
             console.log(cityElementSelected);
             const selectedCity = helpers.findSelectedLocation(
@@ -119,10 +128,12 @@ const mainController = (() => {
         helpers.updateFavCollection();
         updateStaticLocation(dataState.currentCity);
     });
+
     searchLocationButton.addEventListener("click", async () => {
         globalCityValue = searchLocationInput.value;
         await updateGlobalWeatherObject();
     });
+
     window.addEventListener("keyup", async (e) => {
         if (e.key === "Enter" && e.target.matches("#search-input")) {
             globalCityValue = searchLocationInput.value;
