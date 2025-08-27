@@ -8,7 +8,7 @@ let mapTile;
 let currentMarker;
 const helpers = (function helpersModule() {
     function getUrl(location, coord) {
-        const coordUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=10&appid=${apiKey}`;
+        const coordUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=10&appid=${apiKey}`;
         if (coord)
             weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coord[0]}&lon=${coord[1]}&appid=${apiKey}`;
         return { coordUrl, weatherUrl };
