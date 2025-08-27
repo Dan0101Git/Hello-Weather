@@ -154,9 +154,15 @@ const mainController = (() => {
         globalCityValue = searchLocationInput.value;
         await updateGlobalWeatherObject();
     });
-    globalCityValue = "leh";
-    updateGlobalWeatherObject();
 
+    async function runDefault() {
+        globalCityValue = "leh";
+        await updateGlobalWeatherObject();
+        helpers.updateFavCollection();
+        updateStaticLocation(dataState.currentCity);
+    }
+
+    runDefault();
     window.addEventListener("keyup", async (e) => {
         if (e.key === "Enter" && e.target.matches("#search-input")) {
             globalCityValue = searchLocationInput.value;
