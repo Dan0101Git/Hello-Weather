@@ -55,7 +55,7 @@
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.135);
     --border-radius: 1rem;
-    --base-font-size: clamp(10px, calc(6px + 0.5vw), 1.5vw);
+    --base-font-size: clamp(9px, calc(6px + 0.5vw), 1.5vw);
     --text-color: #ffffff;
     --text-color-dup: #b6b6b6da;
 }
@@ -333,8 +333,8 @@ main.main-section {
     }
     .container .sidebar {
         order: 2;
-        max-width: 35rem;
-        min-width: 30rem;
+        max-width: 40rem;
+        min-width: 37rem;
     }
     .city-details {
         flex-wrap: wrap;
@@ -586,7 +586,7 @@ div {
     cursor: pointer;
 }
 .search-location input {
-    height: 2.5rem;
+    height: 3.5rem;
     width: 90%;
     padding: 0.7rem;
     background-color: rgba(29, 29, 29, 0.409);
@@ -594,6 +594,7 @@ div {
     border: none;
     border-radius: 0.5rem;
     opacity: 0.5;
+    font-size: 1.5rem;
 }
 .date-time {
     display: flex;
