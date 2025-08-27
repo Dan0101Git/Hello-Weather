@@ -21,7 +21,6 @@
     "bugs": {
         "url": "https://github.com/Dan0101Git/Hello-Weather/issues"
     },
-    "homepage": "https://github.com/Dan0101Git/Hello-Weather#readme",
     "description": "",
     "devDependencies": {
         "@eslint/eslintrc": "^3.3.1",
