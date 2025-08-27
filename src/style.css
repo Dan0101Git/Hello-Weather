@@ -55,7 +55,7 @@
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.135);
     --border-radius: 1rem;
-    --base-font-size: clamp(10px, calc(8px + 0.6vw), 1.5vw);
+    --base-font-size: clamp(10px, calc(6px + 0.5vw), 1.5vw);
     --text-color: #ffffff;
     --text-color-dup: #b6b6b6da;
 }
