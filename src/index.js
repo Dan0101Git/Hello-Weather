@@ -91,7 +91,8 @@ const mainController = (() => {
     async function updateGlobalWeatherObject() {
         rendHlper.resetRender(tempCard);
         console.log(tempCard);
-        currentWeather.appendChild(gifImg);
+        currentWeather.appendChild(gifImg); // added to show loaded stuff
+
         await getCityWeather();
         await getWeather();
     }
