@@ -18,6 +18,8 @@ const mainController = (() => {
     gifImg.src = loadGif;
     gifImg.classList.add("load");
 
+    const notFoundError = document.createElement("p");
+    notFoundError.classList.add("not-found");
     const units = document.querySelector(".temp");
     let globalCityValue;
     // const apiKey="21522390f9b0f28b34db2255350fa66a";
@@ -86,6 +88,10 @@ const mainController = (() => {
         } catch (error) {
             // eslint-disable-next-line no-alert
             console.log(error);
+            rendHlper.resetRender(tempCard);
+            console.log(tempCard);
+            notFoundError.textContent = error;
+            currentWeather.appendChild(notFoundError); // added to show loaded stuff
         }
     }
     async function updateGlobalWeatherObject() {

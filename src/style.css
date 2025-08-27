@@ -796,3 +796,6 @@ div {
     left: 0;
     border-radius: 1rem;
 }
+.not-found {
+    font-size: 4rem;
+}
