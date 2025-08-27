@@ -4,12 +4,19 @@ import data from "./app/bundleData";
 import render from "./render/render";
 import City from "./app/city";
 import dataState from "./dataState";
+import rendHlper from "./render/renderHelpers";
+import loadGif from "./images/loading.gif";
 
 const mainController = (() => {
     const searchLocationInput = document.querySelector("#search-input");
     const searchLocationButton = document.querySelector(".search-button");
     const addFavLocationButton = document.querySelector(".add-fav button");
     const favCityListItem = document.querySelector("#fav-city");
+    const tempCard = document.querySelector(".current-weather-wrapper");
+    const currentWeather = document.querySelector(".current-weather");
+    const gifImg = document.createElement("img");
+    gifImg.src = loadGif;
+    gifImg.classList.add("load");
 
     const units = document.querySelector(".temp");
     let globalCityValue;
@@ -51,7 +58,11 @@ const mainController = (() => {
                 const coordResponse = await helpers.getData(
                     helpers.getUrl(location).coordUrl
                 );
-                console.log(helpers.getElapsedTime(time1));
+                console.log(helpers.getElapsedTime(time1), coordResponse);
+                if (coordResponse.length === 0) {
+                    console.log(coordResponse);
+                    throw new Error("Location doesn't Exist in the Db!");
+                }
                 const coordData = data.bundleCoordData(coordResponse);
                 const coord = [
                     coordData.coordinates[0],
@@ -73,10 +84,14 @@ const mainController = (() => {
                 throw new Error("please enter the location");
             }
         } catch (error) {
+            // eslint-disable-next-line no-alert
             console.log(error);
         }
     }
     async function updateGlobalWeatherObject() {
+        rendHlper.resetRender(tempCard);
+        console.log(tempCard);
+        currentWeather.appendChild(gifImg);
         await getCityWeather();
         await getWeather();
     }

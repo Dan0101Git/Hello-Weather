@@ -21,6 +21,7 @@ const rendHlper = (function renderHelpers() {
     }
     function resetRender(div) {
         let tempChildren;
+        console.log(div);
         if (div.children) tempChildren = Array.from(div.children);
 
         tempChildren.forEach((child) => {

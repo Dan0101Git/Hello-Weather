@@ -7,7 +7,7 @@ const render = (function renderWeather() {
     let addressName;
 
     function renderDisplay(dataState) {
-        let addresssDiv;
+        let addresssDiv = null;
         const city = dataState.currentCity;
         const citiesArr = dataState.favLocationArr;
 
@@ -15,9 +15,10 @@ const render = (function renderWeather() {
         addressName = city;
         // console.log(address);
         if (document.querySelector(".address-div")) {
-            addresssDiv = document.querySelector(".current-weather-wrapper");
-            rendHlper.resetRender(addresssDiv);
+            console.log("thisis hsould end oevr here");
         }
+        addresssDiv = document.querySelector(".current-weather-wrapper");
+        rendHlper.resetRender(addresssDiv);
         console.log(JSON.parse(JSON.stringify(addressName)));
         rendHlper.renderLocationAddress(addressName);
         renderAdditional.makeAdditionalCarousel(dataState);
