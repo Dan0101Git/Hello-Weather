@@ -148,6 +148,8 @@ const mainController = (() => {
         globalCityValue = searchLocationInput.value;
         await updateGlobalWeatherObject();
     });
+    globalCityValue = "leh";
+    updateGlobalWeatherObject();
 
     window.addEventListener("keyup", async (e) => {
         if (e.key === "Enter" && e.target.matches("#search-input")) {
