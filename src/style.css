@@ -55,7 +55,7 @@
     --heading-font-family: "Raleway", sans-serif;
     --container-bg: rgba(66, 66, 66, 0.135);
     --border-radius: 1rem;
-    --base-font-size: clamp(7px, calc(6px + 0.4vw), 1.5vw);
+    --base-font-size: clamp(10px, calc(8px + 0.6vw), 1.5vw);
     --text-color: #ffffff;
     --text-color-dup: #b6b6b6da;
 }
@@ -341,8 +341,9 @@ main.main-section {
         justify-content: center;
         order: 1;
     }
-    .temp-wrapper {
-        max-height: 500px;
+    .temp-wrapper .temp.card {
+        max-height: 700px;
+        min-height: 40rem;
     }
 }
 @media screen and (max-width: 350px) {
