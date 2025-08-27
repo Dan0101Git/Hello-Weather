@@ -108,7 +108,6 @@ const mainController = (() => {
         const cityElementSelected = e.target.closest(".city-list-item");
         console.log(cityElementSelected);
         helpers.deleteFavLocation(cityElementSelected.getAttribute("data-id"));
-
         updateStaticLocation(dataState.favLocationArr[0]);
     }
     favCityListItem.addEventListener("click", async (e) => {

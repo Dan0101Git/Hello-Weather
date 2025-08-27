@@ -71,9 +71,17 @@ const helpers = (function helpersModule() {
         console.log(dataState.currentCity, dataState.favLocationArr);
     }
     function deleteFavLocation(dataId) {
-        dataState.favLocationArr = dataState.favLocationArr.filter(
-            (city) => city.id !== dataId
-        );
+        try {
+            if (dataState.favLocationArr.length > 1) {
+                dataState.favLocationArr = dataState.favLocationArr.filter(
+                    (city) => city.id !== dataId
+                );
+            } else {
+                throw new Error("cannot delete single location");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
     return {
         getUrl,
