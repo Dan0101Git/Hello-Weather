@@ -343,7 +343,7 @@ main.main-section {
     }
     .temp-wrapper .temp.card {
         max-height: 700px;
-        min-height: 40rem;
+        min-height: 65rem;
     }
 }
 @media screen and (max-width: 350px) {
