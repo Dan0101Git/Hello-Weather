@@ -745,6 +745,7 @@ div {
     height: 25rem;
     margin-bottom: 0.4rem;
     opacity: 1;
+    min-height: 250px;
 }
 .leaflet-popup-content-wrapper {
     background-color: #2c2c2c9c; /* Dark background */

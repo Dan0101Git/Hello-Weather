@@ -163,7 +163,7 @@ const rendHlper = (function renderHelpers() {
         hourlyChart = new Chart(ctx, getChartObject(cityData, gradient));
     }
 
-    function createMap(coord) {
+    function createMap(coord, tempinK) {
         const personalapi = "1fp94SO6RYxAMY69DWA0ZllC63Krpklc";
 
         const options = {
@@ -171,41 +171,46 @@ const rendHlper = (function renderHelpers() {
             lat: coord[0],
             lon: coord[1],
             zoom: 5,
-            overlay: "temp", // Windy temperature overlay
+            overlay: "temp",
         };
 
-        // eslint-disable-next-line no-undef
         windyInit(options, (windyAPI) => {
             const { map } = windyAPI;
             mapTile = map;
-            setTimeout(() => {
-                map.invalidateSize();
-            }, 100); // 100 milliseconds is usually enough
 
-            // STEP 1: Create a new pane for our base map
-            // map.createPane("basePane");
-
-            // // STEP 2: Set its z-index to be very low (lower than Windy's layers)
-            // map.getPane("basePane").style.zIndex = 199;
-
-            // // STEP 3: Add your tile layer and assign it to the new pane
-            // L.tileLayer(
-            //     `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
-            //     {
-            //         attribution:
-            //             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            //         // Use the 'pane' option instead of 'zIndex'
-            //         pane: "basePane",
-            //     }
-            // ).addTo(map);
-
-            // The Windy overlay will now correctly display on top
+            // This sets the initial weather overlay
             windyAPI.store.set("overlay", "temp");
+
+            // ** START OF THE NEW, RELIABLE FIX **
+            // Find the HTML element that contains the map
+            const mapContainer = document.getElementById("windy"); // Or your map container's selector
+
+            // Create an observer to watch for size changes
+            const resizeObserver = new ResizeObserver(() => {
+                map.invalidateSize();
+            });
+
+            // Start watching the map container
+            resizeObserver.observe(mapContainer);
+            // ** END OF THE NEW FIX **
+
+            // Create the first marker
+            currentMarker = L.circleMarker(coord, {
+                radius: 8,
+                fillColor: "#0a0a0a",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+            })
+                .addTo(mapTile)
+                .bindPopup(`${getTempinC(tempinK)}`)
+                .openPopup();
         });
     }
     function buildMap(coord, tempinK) {
         if (!mapTile) {
-            createMap(coord);
+            createMap(coord, tempinK);
         } else {
             mapTile.setView(coord, 7);
             if (currentMarker) {
