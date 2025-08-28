@@ -178,23 +178,26 @@ const rendHlper = (function renderHelpers() {
         windyInit(options, (windyAPI) => {
             const { map } = windyAPI;
             mapTile = map;
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100); // 100 milliseconds is usually enough
 
             // STEP 1: Create a new pane for our base map
-            map.createPane("basePane");
+            // map.createPane("basePane");
 
-            // STEP 2: Set its z-index to be very low (lower than Windy's layers)
-            map.getPane("basePane").style.zIndex = 199;
+            // // STEP 2: Set its z-index to be very low (lower than Windy's layers)
+            // map.getPane("basePane").style.zIndex = 199;
 
-            // STEP 3: Add your tile layer and assign it to the new pane
-            L.tileLayer(
-                `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
-                {
-                    attribution:
-                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                    // Use the 'pane' option instead of 'zIndex'
-                    pane: "basePane",
-                }
-            ).addTo(map);
+            // // STEP 3: Add your tile layer and assign it to the new pane
+            // L.tileLayer(
+            //     `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`,
+            //     {
+            //         attribution:
+            //             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            //         // Use the 'pane' option instead of 'zIndex'
+            //         pane: "basePane",
+            //     }
+            // ).addTo(map);
 
             // The Windy overlay will now correctly display on top
             windyAPI.store.set("overlay", "temp");
